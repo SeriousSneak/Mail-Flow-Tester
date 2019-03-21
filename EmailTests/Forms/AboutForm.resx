@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="label4.Text" xml:space="preserve">
+    <value>FOR INTERNAL MICROSOFT USE ONLY
+
+This application can be used to send mail. If installed from TOOLBOX this application will autoupdate.
+
+Instructions can be found at the following link (you need to be connected to corpnet).</value>
+  </data>
+  <data name="textBox1.Text" xml:space="preserve">
+    <value> 2.8.0 (March 21, 2019)
+ - double clicking on a cell in the log now pops up a new window with a text
+    box which contains the contents of that cell. This allows text that may be 
+    cut off in the cell to be easily viewed without needing to copy the cell and
+    then paste it into another program like notepad
+ - build version updated on .exe file. If you right click the EXE and look at
+    properties, the version now properly matches the application version. 
+    Previously it was showing version 2.5.1
+ - Port can now always be changed. Previously, it could only be changed if 
+    you checked off "manually specify receiving server."
+ - Text validation is now performed on the Port text box. An error will appear if
+    this text box contains anything other than an integer.
+ - Cleaned up some text boxes that did not have a header on them (added
+    "Input Validation" as the header
+ - Hitting TAB now logically cycles between all controls which can be modified
+ - Due to order processing previously, if the recipient server was not accessible
+    over the specified port, a text box would appear with a nonsensical error.
+    Now, if the recipient server cannot be reached, a clear error will pop up.
+ - the code that detects if an end point is reachable has been optimized and 
+    better calls out a connection issue if the end point cannot be reached 
+
+2.7.0 (November 30, 2018)
+ - Error messages from remote servers now populate in the log. Previously
+    the error message would only appear in a popup window
+
+2.6.1 (August 24, 2018)
+ - Previous update (2.6.0) introduced an issue that caused adding a P2 from
+   address to not work. This update fixes that issue
+
+2.6.0 (June 27, 2018)
+ - Error messages that are received from the recipient server now appear 
+    in a text box which allows the error to be copied
+ - The message that appeared when there was an issue with DNS resolution
+    is now more informative
+ - The "From" tag changed to "MailFrom" which better represents what this
+    text field represents
+ - Typos fixed on some message boxes
+
+2.5.1 (June 30, 2016)
+ - MX lookups for the @microsoft.com domain now complete succesfully
+   if you are on the corporate Microsoft network
+
+2.5.0 (December 3, 2015)
+ - A Reply-To address can now be set under Advanced Options
+ - UI consistency updates
+
+2.4.3 (October 15, 2015)
+ - A new item has been added under Options called "Append date to 
+    subject." This will append the current date and time to the subject 
+    when a message is sent. The resulting subject will be visible in the log view. 
+ - The option "manually specify recipient server" is now unchecked by 
+    default.
+
+2.4.1 (September 28, 2015)
+ - Application width can now be changed while the log is visible (there
+    is a minimum width that the application enforces while the log is visible).
+ - DNS resolution errors now appear in the log.
+ - Message send failures no longer add a MessageID to their corresponding
+    log entry.
+ - Instructions to use the application have been added as a link to the About
+    form.
+ - UI updates for consistency across the application.
+
+2.3.5 (July 23, 2015) 
+ - Application now gracefully closes the TCP connections that it 
+    establishes. You will no longer see RST (resets) in a network trace.
+    You will see the proper [FIN, ACK] TCP teardown sequence after
+    the message is sent.
+
+2.3.4 (June 22, 2015)
+ - TCP connection to see if recipient server is reachable did not close after 
+    it was established. This connection now properly closes.
+ - TCP connection to see if recipient server is reachable always used port 25. 
+    This  test now properly uses the port entered into the application.
+ - Start menu folder name changed from "Andrew Stobart" to "Mail Flow 
+    Tester" 
+ - Button style on About form changed to be white and flat to match the UI 
+    in the main form  
+ - Change log textbox background changed to be white to match the UI in 
+    the main form 
+
+2.3.2 (March 17, 2015)
+ - Minor bug fixes
+
+2.3.1 (February 23, 2015)
+ - Message-ID for outbound messages is now added to the log
+ - Cell contents in the log can be copied by right clicking on them and
+    selecting "copy cell"
+ - Window width reduced when the log is visible
+ - Can export the log to a CSV file
+ - Clear Log button will now prompt for confirmation
+
+2.2.3 (January 16, 2015)
+ - More than one custom header can now be added
+ - MX lookup code is now more robust. If the first query fails, a second 
+    will be performed
+ - Individual rows can now be deleted from the log
+
+2.1.2 (January 8, 2015)
+ - Logging of sent messages (check box "View log")
+ - App now checks connectivity to reciving server before attempting
+    to send the message (timeout is 3 seconds)
+
+2.0.2 (October 31, 2014)
+ - Added checkbox to show and hide advanced options
+ - Program now has ability to do an MX lookup
+ - Tabbing through text boxes now moves in order from top to bottom
+
+1.8.2 (October 23, 2014)
+  - Added a change log to the about box
+  - Added a ToolTip to the TO textbox
+
+1.8.1 (October 7, 2014) 
+  - Initial release on CodeBox
+  - Added the ability to set both a P1 and P2 from address
+  - Added ability to add a custom x-header
+  - Added ability to attach multiple attachments. Previously you could only 
+     attach one.
+  - Added an about box
+
+1.5 (April 8, 2014)
+ - Added the ability to set a custom port
+
+1.4 (April 1, 2014)
+ - Added ability to toggle TLS on or off
+ - Disable "send" button to prevent clicking while app is sending a message
+
+1.1 (March 31, 2014)
+ - Ability to remove an added attachment
+
+1.0 (March 2014)
+ - Andrew's initial release of the program</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        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
+        AAAAAElFTkSuQmCC
+</value>
+  </data>
+</root>

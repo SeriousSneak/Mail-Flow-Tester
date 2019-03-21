@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mail Flow Tester", "EmailTests\Mail Flow Tester.csproj", "{B084B861-34E0-4C8E-81FC-A6081D72B21C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		msi|Any CPU = msi|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B084B861-34E0-4C8E-81FC-A6081D72B21C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B084B861-34E0-4C8E-81FC-A6081D72B21C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B084B861-34E0-4C8E-81FC-A6081D72B21C}.msi|Any CPU.ActiveCfg = msi|Any CPU
+		{B084B861-34E0-4C8E-81FC-A6081D72B21C}.msi|Any CPU.Build.0 = msi|Any CPU
+		{B084B861-34E0-4C8E-81FC-A6081D72B21C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B084B861-34E0-4C8E-81FC-A6081D72B21C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
