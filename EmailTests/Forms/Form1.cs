@@ -124,9 +124,10 @@
  *                              now been cleaned up.
  *                            - the code that detects if an end point is reachable has been optimized and better calls out a connection issue if the end point cannot be reached  
  *                             
+ *   March 21, 2019 - Moved to GitHub                         
  *                            
- *                            
- * Future - text validation on various text boxes. I'm curently validating the the port text box only contains an integer. Ensure a domain or email address doesn't contain spaces.
+ * Future - Have app link directly in Start Menu, as opposed to being in a folder which is in the Start Menu
+ *        - text validation on various text boxes. I'm curently validating the the port text box only contains an integer. Ensure a domain or email address doesn't contain spaces.
  *        - Add an easter egg to the app
  *        - When adding a different P2 address, is there any way to tell the app to not add the header, "Sender," which casuses the (sent on behalf of) name in Outlook?
  *        - Allow server testing to be disabled? Or some way to turn it off? Sometimes I don't want to see this in a network trace. Maybe add this beside the "Append date to subject"
