@@ -144,12 +144,6 @@
 //Nov 28/14 update: When sending mail from home and I select to do a DNS lookup, the program never times out. If I
 //manually specify the server then it does timeout after 20 seconds. See http://stackoverflow.com/questions/10467476/smtpclient-timeout-doesnt-work
 
-/*
-https://stackoverflow.com/questions/4564466/sending-on-behalf-of-emails
-https://social.msdn.microsoft.com/Forums/en-US/77c0e584-a4fd-49e5-95fc-91cab03aca22/systemnetmail-method-clear-of-mailaddresscollection-leaves-1-element-unremoved?forum=netfxnetcom
-https://afterlogic.com/mailbee-net/docs/set_from_and_other_headers.html
-https://stackoverflow.com/questions/51793/how-can-you-set-the-smtp-envelope-mail-from-using-system-net-mail
-*/
 
 using System;
 using System.ComponentModel;
