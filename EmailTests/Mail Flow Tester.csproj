@@ -13,9 +13,9 @@
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>\\tkfiltoolbox\tools\mailflowtester\release\</PublishUrl>
+    <PublishUrl>C:\Users\astobart\Desktop\</PublishUrl>
     <Install>true</Install>
-    <InstallFrom>Unc</InstallFrom>
+    <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Background</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
@@ -24,7 +24,7 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <UpdateUrl>\\tkfiltoolbox\tools\mailflowtester\release\</UpdateUrl>
-    <ProductName>Mail Flow Tester v2</ProductName>
+    <ProductName>Mail Flow Tester</ProductName>
     <PublisherName>Mail Flow Tester</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
