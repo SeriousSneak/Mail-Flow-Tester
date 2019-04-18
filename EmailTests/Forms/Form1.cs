@@ -8,13 +8,6 @@
  *               Internet and destined to the customer. The Server variable is the MX
  *               record that Office 365 provides for the domain.
  *               
- * Future - Have up lookup MX records. Maybe pop a status window when the lookup is happening? Or a status bar at the bottom of the window? I like the pop window better.
- *        - Hyper link Gtube and CICAR to Wiki articles
- *        - Option to send a suite of emails, regular, one with gtube, one with eicar, etc.... --> Don't like
- *        - Drag and drop attachements to the attachments window
- *        - Some kind of output. Either a file or text box in the app. Check box that will expand the app to add Kevin's content
- *        - Because of the help button, you currently cannot minimize the app
- *        - For MX lookup, place the server name in the ServerTo text box --> Don't like this
  * 
  * Versions:
  *   1.0.0 (March 2014):      - Andrew's initial release of the program.
@@ -124,7 +117,8 @@
  *                              now been cleaned up.
  *                            - the code that detects if an end point is reachable has been optimized and better calls out a connection issue if the end point cannot be reached  
  *                             
- *   March 21, 2019 - Moved to GitHub                         
+ *   2.8.1 (March 21, 2019)   - Moved to GitHub                         
+ *                            - code cleanup
  *                            
  * Future - Have app link directly in Start Menu, as opposed to being in a folder which is in the Start Menu
  *        - text validation on various text boxes. I'm curently validating the the port text box only contains an integer. Ensure a domain or email address doesn't contain spaces.
@@ -139,6 +133,10 @@
  *                Doesn't work:                     mail.Headers.Remove("Sender");
  *        - SmtpClient Class has apparently een depreciated, https://docs.microsoft.com/en-us/dotnet/api/system.net.mail.smtpclient?view=netframework-4.7.2. Recommendation
  *          is to use https://github.com/jstedfast/MailKit and https://github.com/jstedfast/MimeKit instead.
+ *           * Future - Have up lookup MX records. Maybe pop a status window when the lookup is happening? Or a status bar at the bottom of the window? I like the pop window better.
+ *        - Hyper link Gtube and CICAR to Wiki articles
+ *        - Option to send a suite of emails, regular, one with gtube, one with eicar, etc.... --> Don't like
+ *        - Drag and drop attachements to the attachments window
  *----------------------------------------------------------------------------*/
 //original form size = 355, 333 (470, 409 on home monitor with 125% scaling)
 //Nov 28/14 update: When sending mail from home and I select to do a DNS lookup, the program never times out. If I
