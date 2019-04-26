@@ -45,6 +45,7 @@
             this.buttonSend = new System.Windows.Forms.Button();
             this.buttonBrowse = new System.Windows.Forms.Button();
             this.gbOptions = new System.Windows.Forms.GroupBox();
+            this.checkServerReachable = new System.Windows.Forms.CheckBox();
             this.checkDateAppend = new System.Windows.Forms.CheckBox();
             this.checkLog = new System.Windows.Forms.CheckBox();
             this.checkEnableAdvanced = new System.Windows.Forms.CheckBox();
@@ -93,6 +94,8 @@
             this.toolStripMenuDeleteRow = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonClearLog = new System.Windows.Forms.Button();
             this.buttonExportLog = new System.Windows.Forms.Button();
+            this.textTimeOut = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.gbOptions.SuspendLayout();
             this.groupBoxAttachments.SuspendLayout();
             this.contextMenuStripAttachment.SuspendLayout();
@@ -203,7 +206,7 @@
             this.buttonSend.BackColor = System.Drawing.Color.White;
             this.buttonSend.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.buttonSend.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSend.Location = new System.Drawing.Point(153, 325);
+            this.buttonSend.Location = new System.Drawing.Point(159, 359);
             this.buttonSend.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSend.Name = "buttonSend";
             this.buttonSend.Size = new System.Drawing.Size(145, 28);
@@ -229,6 +232,9 @@
             // 
             // gbOptions
             // 
+            this.gbOptions.Controls.Add(this.label6);
+            this.gbOptions.Controls.Add(this.textTimeOut);
+            this.gbOptions.Controls.Add(this.checkServerReachable);
             this.gbOptions.Controls.Add(this.checkDateAppend);
             this.gbOptions.Controls.Add(this.checkLog);
             this.gbOptions.Controls.Add(this.checkEnableAdvanced);
@@ -240,15 +246,26 @@
             this.gbOptions.Margin = new System.Windows.Forms.Padding(4);
             this.gbOptions.Name = "gbOptions";
             this.gbOptions.Padding = new System.Windows.Forms.Padding(4);
-            this.gbOptions.Size = new System.Drawing.Size(421, 107);
+            this.gbOptions.Size = new System.Drawing.Size(421, 139);
             this.gbOptions.TabIndex = 7;
             this.gbOptions.TabStop = false;
             this.gbOptions.Text = "Options";
             // 
+            // checkServerReachable
+            // 
+            this.checkServerReachable.AutoSize = true;
+            this.checkServerReachable.Location = new System.Drawing.Point(12, 80);
+            this.checkServerReachable.Name = "checkServerReachable";
+            this.checkServerReachable.Size = new System.Drawing.Size(205, 21);
+            this.checkServerReachable.TabIndex = 27;
+            this.checkServerReachable.TabStop = false;
+            this.checkServerReachable.Text = "Check if server is reachable";
+            this.checkServerReachable.UseVisualStyleBackColor = true;
+            // 
             // checkDateAppend
             // 
             this.checkDateAppend.AutoSize = true;
-            this.checkDateAppend.Location = new System.Drawing.Point(12, 78);
+            this.checkDateAppend.Location = new System.Drawing.Point(130, 52);
             this.checkDateAppend.Margin = new System.Windows.Forms.Padding(4);
             this.checkDateAppend.Name = "checkDateAppend";
             this.checkDateAppend.Size = new System.Drawing.Size(176, 21);
@@ -260,7 +277,7 @@
             // checkLog
             // 
             this.checkLog.AutoSize = true;
-            this.checkLog.Location = new System.Drawing.Point(304, 52);
+            this.checkLog.Location = new System.Drawing.Point(323, 52);
             this.checkLog.Margin = new System.Windows.Forms.Padding(4);
             this.checkLog.Name = "checkLog";
             this.checkLog.Size = new System.Drawing.Size(82, 21);
@@ -273,7 +290,7 @@
             // checkEnableAdvanced
             // 
             this.checkEnableAdvanced.AutoSize = true;
-            this.checkEnableAdvanced.Location = new System.Drawing.Point(147, 52);
+            this.checkEnableAdvanced.Location = new System.Drawing.Point(11, 108);
             this.checkEnableAdvanced.Margin = new System.Windows.Forms.Padding(4);
             this.checkEnableAdvanced.Name = "checkEnableAdvanced";
             this.checkEnableAdvanced.Size = new System.Drawing.Size(143, 21);
@@ -298,7 +315,7 @@
             // rbGtube
             // 
             this.rbGtube.AutoSize = true;
-            this.rbGtube.Location = new System.Drawing.Point(147, 23);
+            this.rbGtube.Location = new System.Drawing.Point(130, 23);
             this.rbGtube.Margin = new System.Windows.Forms.Padding(4);
             this.rbGtube.Name = "rbGtube";
             this.rbGtube.Size = new System.Drawing.Size(73, 21);
@@ -323,7 +340,7 @@
             // rbEICAR
             // 
             this.rbEICAR.AutoSize = true;
-            this.rbEICAR.Location = new System.Drawing.Point(304, 23);
+            this.rbEICAR.Location = new System.Drawing.Point(248, 23);
             this.rbEICAR.Margin = new System.Windows.Forms.Padding(4);
             this.rbEICAR.Name = "rbEICAR";
             this.rbEICAR.Size = new System.Drawing.Size(69, 21);
@@ -563,19 +580,19 @@
             this.panel1.Controls.Add(this.groupBox2);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.groupBoxAttachments);
-            this.panel1.Location = new System.Drawing.Point(-3, 316);
+            this.panel1.Location = new System.Drawing.Point(-2, 347);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(453, 447);
+            this.panel1.Size = new System.Drawing.Size(453, 448);
             this.panel1.TabIndex = 9;
             this.panel1.TabStop = true;
             this.panel1.Visible = false;
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.textReplyTo);
             this.groupBox4.Controls.Add(this.labelReplyTo);
             this.groupBox4.Controls.Add(this.checkSpecifyReplyTo);
+            this.groupBox4.Controls.Add(this.textReplyTo);
             this.groupBox4.Location = new System.Drawing.Point(19, 78);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
@@ -655,7 +672,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.Size = new System.Drawing.Size(840, 303);
+            this.dataGridView1.Size = new System.Drawing.Size(840, 334);
             this.dataGridView1.TabIndex = 9;
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellDoubleClick);
@@ -759,7 +776,7 @@
             // 
             this.buttonClearLog.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.buttonClearLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonClearLog.Location = new System.Drawing.Point(459, 325);
+            this.buttonClearLog.Location = new System.Drawing.Point(459, 359);
             this.buttonClearLog.Margin = new System.Windows.Forms.Padding(4);
             this.buttonClearLog.Name = "buttonClearLog";
             this.buttonClearLog.Size = new System.Drawing.Size(100, 28);
@@ -773,7 +790,7 @@
             // 
             this.buttonExportLog.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.buttonExportLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonExportLog.Location = new System.Drawing.Point(579, 325);
+            this.buttonExportLog.Location = new System.Drawing.Point(579, 359);
             this.buttonExportLog.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonExportLog.Name = "buttonExportLog";
             this.buttonExportLog.Size = new System.Drawing.Size(99, 28);
@@ -783,17 +800,34 @@
             this.buttonExportLog.UseVisualStyleBackColor = true;
             this.buttonExportLog.Click += new System.EventHandler(this.buttonExportLog_Click);
             // 
+            // textTimeOut
+            // 
+            this.textTimeOut.Location = new System.Drawing.Point(364, 78);
+            this.textTimeOut.Name = "textTimeOut";
+            this.textTimeOut.Size = new System.Drawing.Size(41, 22);
+            this.textTimeOut.TabIndex = 28;
+            this.textTimeOut.TabStop = false;
+            this.textTimeOut.Text = "10";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(223, 81);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(135, 17);
+            this.label6.TabIndex = 29;
+            this.label6.Text = "Time out in seconds";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(452, 362);
+            this.ClientSize = new System.Drawing.Size(452, 398);
             this.Controls.Add(this.buttonSend);
             this.Controls.Add(this.buttonExportLog);
             this.Controls.Add(this.buttonClearLog);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.gbOptions);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -804,6 +838,7 @@
             this.Controls.Add(this.textFrom);
             this.Controls.Add(this.textTo);
             this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -898,6 +933,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Result;
         private System.Windows.Forms.DataGridViewTextBoxColumn Server;
         private System.Windows.Forms.DataGridViewTextBoxColumn messageid;
+        private System.Windows.Forms.CheckBox checkServerReachable;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textTimeOut;
     }
 }
 

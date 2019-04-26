@@ -116,9 +116,13 @@
  *                              a datagram socket using a sendto call) no address was supplied) would previously appear if you could not reach the recipient server on port 25. This error has 
  *                              now been cleaned up.
  *                            - the code that detects if an end point is reachable has been optimized and better calls out a connection issue if the end point cannot be reached  
+ *                            - Moved to GitHub
  *                             
- *   2.8.1 (March 21, 2019)   - Moved to GitHub                         
- *                            - code cleanup
+ *   2.8.2 (March 21, 2019)   - code cleanup
+ *                            - Added check box to disable the "is recipient server reachable" test
+ *                            - "sending message timeout" is now configurable
+ *                            - input validation test for timeout text box (ensures value is a number)
+ *                            - Need to add new notes to AboutForm. Update everything to 2.8.2, or jump to 2.9?
  *                            
  * Future - Have app link directly in Start Menu, as opposed to being in a folder which is in the Start Menu
  *        - text validation on various text boxes. I'm curently validating the the port text box only contains an integer. Ensure a domain or email address doesn't contain spaces.
@@ -215,13 +219,21 @@ namespace EmailTests
                         throw new ApplicationException("The port is set to \"" + textPort.Text + "\" but must be an integer.");
                     }
 
+                    /*Input validation for time out*/
+                    n = 0;
+                    isNumber = int.TryParse(textTimeOut.Text, out n);
+                    if (!isNumber)
+                    {
+                        throw new ApplicationException("The time out is set to \"" + textPort.Text + "\" but must be an integer.");
+                    }
 
 
-                    /* -----------------------------------
-                     * RECEIVING SERVER SETTINGS
-                     * -----------------------------------*/
-                    client.Port = Convert.ToInt32(textPort.Text);
-                    client.Timeout = 10000;  //10 second timeout
+
+                /* -----------------------------------
+                 * RECEIVING SERVER SETTINGS
+                 * -----------------------------------*/
+                client.Port = Convert.ToInt32(textPort.Text);
+                    client.Timeout = 60000;  //10 second timeout
 
                     if (checkForceTLS.Checked == true)
                     {
@@ -336,20 +348,24 @@ namespace EmailTests
 
                 //The bellow replaced the above code in the Mar 21, 2019 release (version 2.8.0). See the commens on the above block which talks about the problem with it.
                 //https://stackoverflow.com/questions/1062035/how-to-configure-socket-connect-timeout
-                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                IAsyncResult result = socket.BeginConnect(textServer.Text, Convert.ToInt32(textPort.Text), null, null);
-                bool success = result.AsyncWaitHandle.WaitOne(3000, true); //wait 3 seconds
 
-                if (socket.Connected == false)
+
+                if (checkServerReachable.Checked == true)
                 {
-                    socket.Close();
-                    throw new ApplicationException("Failed to connect to " + textServer.Text + " on port " + textPort.Text + ".");
+                    Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    IAsyncResult result = socket.BeginConnect(textServer.Text, Convert.ToInt32(textPort.Text), null, null);
+                    bool success = result.AsyncWaitHandle.WaitOne(3000, true); //wait 3 seconds
+
+                    if (socket.Connected == false)
+                    {
+                        socket.Close();
+                        throw new ApplicationException("Failed to connect to " + textServer.Text + " on port " + textPort.Text + ".");
+                    }
+                    else
+                    {
+                        socket.Disconnect(true);  //close this socket - this line is new in version 2.3.5
+                    }
                 }
-                else
-                {
-                    socket.Disconnect(true);  //close this socket - this line is new in version 2.3.5
-                }
-                
                     
 
 
