@@ -122,7 +122,7 @@
  *                            - Added check box to disable the "is recipient server reachable" test
  *                            - "sending message timeout" is now configurable
  *                            - input validation test for timeout text box (ensures value is a number)
- *                            - Need to add new notes to AboutForm. Update everything to 2.8.2, or jump to 2.9?
+ *                            - Need to add new notes to AboutForm. Update everything to 2.8.2, or jump to 2.9? Maybe I'll start as 3.0 for the release after Github move.
  *                            
  * Future - Have app link directly in Start Menu, as opposed to being in a folder which is in the Start Menu
  *        - text validation on various text boxes. I'm curently validating the the port text box only contains an integer. Ensure a domain or email address doesn't contain spaces.
