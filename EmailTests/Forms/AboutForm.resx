@@ -125,7 +125,17 @@ This application can be used to send mail. If installed from TOOLBOX this applic
 Instructions can be found at the following link (you need to be connected to corpnet).</value>
   </data>
   <data name="textBox1.Text" xml:space="preserve">
-    <value> 2.8.0 (March 21, 2019)
+    <value>3.0.0 (May 16, 2019)
+ - lauch on Github!
+ - code cleanup (comments, redundant lines, formatting)
+ - added check box to disable the "is recipient server reachable" test
+ - "sending message timeout" is now configurable
+ - input validation test for timeout text box (ensures value is a number)
+ - with server test not enabled, test app at home
+ - if "recipient server" was checked but nothing was entered in the text 
+    box the error would not trigger properly. This is now fixed. 
+
+2.8.0 (March 21, 2019)
  - double clicking on a cell in the log now pops up a new window with a text
     box which contains the contents of that cell. This allows text that may be 
     cut off in the cell to be easily viewed without needing to copy the cell and

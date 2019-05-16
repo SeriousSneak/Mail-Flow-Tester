@@ -116,31 +116,26 @@
  *                              a datagram socket using a sendto call) no address was supplied) would previously appear if you could not reach the recipient server on port 25. This error has 
  *                              now been cleaned up.
  *                            - the code that detects if an end point is reachable has been optimized and better calls out a connection issue if the end point cannot be reached  
- *                            - Moved to GitHub
  *                             
- *   2.8.2 (March 21, 2019)   - code cleanup
+ *   3.0.0 (May 16, 2019)     - launch on Github!
+ *                            - code cleanup
  *                            - Added check box to disable the "is recipient server reachable" test
  *                            - "sending message timeout" is now configurable
  *                            - input validation test for timeout text box (ensures value is a number)
- *                            - Need to add new notes to AboutForm. Update everything to 2.8.2, or jump to 2.9? Maybe I'll start as 3.0 for the release after Github move.
+ *                            - with server test not enabled, test app at home
+ *                            - if "recipient server" was checked but nothing was entered in the text box the error would not trigger properly. This is now fixed.
  *                            
- * Future - Have app link directly in Start Menu, as opposed to being in a folder which is in the Start Menu
- *        - text validation on various text boxes. I'm curently validating the the port text box only contains an integer. Ensure a domain or email address doesn't contain spaces.
- *        - Add an easter egg to the app
+ * Future - Have app link directly in Start Menu, as opposed to being in a folder which is in the Start Menu. I don't know if this is possible with click to run
  *        - When adding a different P2 address, is there any way to tell the app to not add the header, "Sender," which casuses the (sent on behalf of) name in Outlook?
- *        - Allow server testing to be disabled? Or some way to turn it off? Sometimes I don't want to see this in a network trace. Maybe add this beside the "Append date to subject"
-            check box
  *        - when opening the log, should the initial width be that of the datagrid? Currently the log always opens to the same width, which is the initial datagrid view
  *          width with no content present
- *        - To Do: Try this to remove the header that causes "Sent on behalf of" mail.Headers.Remove();
- *                https://stackoverflow.com/questions/51793/how-can-you-set-the-smtp-envelope-mail-from-using-system-net-mail
- *                Doesn't work:                     mail.Headers.Remove("Sender");
  *        - SmtpClient Class has apparently een depreciated, https://docs.microsoft.com/en-us/dotnet/api/system.net.mail.smtpclient?view=netframework-4.7.2. Recommendation
  *          is to use https://github.com/jstedfast/MailKit and https://github.com/jstedfast/MimeKit instead.
- *           * Future - Have up lookup MX records. Maybe pop a status window when the lookup is happening? Or a status bar at the bottom of the window? I like the pop window better.
+ *        - Have up lookup MX records. Maybe pop a status window when the lookup is happening? Or a status bar at the bottom of the window? I like the pop window better.
  *        - Hyper link Gtube and CICAR to Wiki articles
- *        - Option to send a suite of emails, regular, one with gtube, one with eicar, etc.... --> Don't like
  *        - Drag and drop attachements to the attachments window
+ *        - option to have the app send x number of messages when Send is clicked (would need to have some sort of progress window appear when this is happening). Maybe change subject
+ *          slightly for all sent messages (prepend with the message number. ex. 1, 2, 3)
  *----------------------------------------------------------------------------*/
 //original form size = 355, 333 (470, 409 on home monitor with 125% scaling)
 //Nov 28/14 update: When sending mail from home and I select to do a DNS lookup, the program never times out. If I
@@ -191,6 +186,7 @@ namespace EmailTests
             DateTime currentDateTime = DateTime.Now;
             string textSubjectFinal = "";
 
+            //this was used to loop through the code to have the app send a large amount of messages. I may add this as an option int he UI in the future.
             //for (int x = 0; x < 600; x++ )
             //{
 
@@ -198,119 +194,113 @@ namespace EmailTests
             buttonSend.Enabled = false;
                 
                 
-                //Generate a Message-ID. This is generated outside the Try so that the value of "gui" can be used in the "catch" 
-                Guid gui = new Guid();
-                gui = Guid.NewGuid();
-                String messageId = "<" + gui.ToString() + "@mft.local>";
+            //Generate a Message-ID. This is generated outside the Try so that the value of "gui" can be used in the "catch" 
+            Guid gui = new Guid();
+            gui = Guid.NewGuid();
+            String messageId = "<" + gui.ToString() + "@mft.local>";
 
                 
 
-                try
+            try
+            {
+                SmtpClient client = new SmtpClient();
+                MailMessage mail = new MailMessage();
+                string[] row = new string[] {"bogus"};
+
+                /*Input validation for Port*/
+                int n = 0;
+                bool isNumber = int.TryParse(textPort.Text, out n);
+                if (!isNumber)
                 {
-                    SmtpClient client = new SmtpClient();
-                    MailMessage mail = new MailMessage();
-                    string[] row = new string[] {"bogus"};
+                    throw new ApplicationException("The port is set to \"" + textPort.Text + "\" but must be an integer.");
+                }
 
-                    /*Input validation for Port*/
-                    int n = 0;
-                    bool isNumber = int.TryParse(textPort.Text, out n);
-                    if (!isNumber)
-                    {
-                        throw new ApplicationException("The port is set to \"" + textPort.Text + "\" but must be an integer.");
-                    }
-
-                    /*Input validation for time out*/
-                    n = 0;
-                    isNumber = int.TryParse(textTimeOut.Text, out n);
-                    if (!isNumber)
-                    {
-                        throw new ApplicationException("The time out is set to \"" + textPort.Text + "\" but must be an integer.");
-                    }
-
-
+                /*Input validation for time out*/
+                n = 0;
+                isNumber = int.TryParse(textTimeOut.Text, out n);
+                if (!isNumber)
+                {
+                    throw new ApplicationException("The time out is set to \"" + textPort.Text + "\" but must be an integer.");
+                }
+                                    
 
                 /* -----------------------------------
                  * RECEIVING SERVER SETTINGS
                  * -----------------------------------*/
                 client.Port = Convert.ToInt32(textPort.Text);
-                    client.Timeout = 60000;  //10 second timeout
+                client.Timeout = 60000;  //10 second timeout
 
-                    if (checkForceTLS.Checked == true)
+                if (checkForceTLS.Checked == true)
+                {
+                    client.EnableSsl = true;
+                }
+                else
+                {
+                    client.EnableSsl = false;
+                }
+
+                client.DeliveryFormat = SmtpDeliveryFormat.International;
+                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                client.UseDefaultCredentials = false;
+
+
+                //this does a DNS lookup if the checkbox is not checked
+                if (checkBoxServerName.Checked == false)
+                {
+                    if (textTo.Text == "")
                     {
-                        client.EnableSsl = true;
+                        MessageBox.Show("Please enter a single recipient address.", "Input Validation", MessageBoxButtons.OK);
+                        buttonSend.Enabled = true;
+                        return;
                     }
-                    else
-                    {
-                        client.EnableSsl = false;
-                    }
-
-                    client.DeliveryFormat = SmtpDeliveryFormat.International;
-                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
-
-                    client.UseDefaultCredentials = false;
-
-
-                    //this does a DNS lookup if the checkbox is not checked
-                    if (checkBoxServerName.Checked == false)
-                    {
-                        if (textTo.Text == "")
-                        {
-                            MessageBox.Show("Please enter a single recipient address.", "Input Validation", MessageBoxButtons.OK);
-                            buttonSend.Enabled = true;
-                            return;
-                        }
                         
-                        //detects the number of @ symbols in the textTo text box. We only want one for a DNS lookup.
-                        string mySubString = "@";
-                        int multipleRecipients = (textTo.Text.Length - textTo.Text.ToLower().Replace(mySubString.ToLower(), string.Empty).Length) / mySubString.Length;
+                    //detects the number of @ symbols in the textTo text box. We only want one for a DNS lookup.
+                    string mySubString = "@";
+                    int multipleRecipients = (textTo.Text.Length - textTo.Text.ToLower().Replace(mySubString.ToLower(), string.Empty).Length) / mySubString.Length;
 
-                        //validates that only a single recipinet has been entered
-                        if (multipleRecipients != 1)
-                        {
-                            MessageBox.Show("Please enter ONLY a single recipient address.", "Input Validation", MessageBoxButtons.OK);
-                            buttonSend.Enabled = true;
-                            return;
-                        }
+                    //validates that only a single recipinet has been entered
+                    if (multipleRecipients != 1)
+                    {
+                        MessageBox.Show("Please enter ONLY a single recipient address.", "Input Validation", MessageBoxButtons.OK);
+                        buttonSend.Enabled = true;
+                        return;
+                    }
 
-                        string toAddy = textTo.Text;
-                        string[] toAddySplit = toAddy.Split('@');
+                    string toAddy = textTo.Text;
+                    string[] toAddySplit = toAddy.Split('@');
 
-                        string mx = getMX(toAddySplit[1]);
+                    string mx = getMX(toAddySplit[1]);
 
 
-                        if (mx == "")
-                        {
-                            //maybe put more in here. Maybe even a window of the nslookup results?
-                            MessageBox.Show("DNS resolution error, no MX record found for " + toAddySplit[1] + ". You may need to manually specify the recipient server.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            buttonSend.Enabled = true;
+                    if (mx == "")
+                    {
+                        //maybe put more in here. Maybe even a window of the nslookup results?
+                        MessageBox.Show("DNS resolution error, no MX record found for " + toAddySplit[1] + ". You may need to manually specify the recipient server.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        buttonSend.Enabled = true;
                             
-                            //add a log entry noting the DNS resolution error
-                            dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubject.Text, getOptions(), "DNS resolution error", textServer.Text, "");
-                            columnResize();
+                        //add a log entry noting the DNS resolution error
+                        dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubject.Text, getOptions(), "DNS resolution error", textServer.Text, "");
+                        columnResize();
 
                         return;
-                        }
-                        else
-                        {
-                            client.Host = mx;
-                            textServer.Text = mx;
-                        }
-
-
-
                     }
                     else
                     {
-                        if (textServer.Text == null)
-                        {
-                            MessageBox.Show("Please ensure a recipient server has been entered.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            buttonSend.Enabled = true;
-                            return;
-                        }
-                        client.Host = textServer.Text; //will throw an error if client.Host is set to an empty string
+                        client.Host = mx;
+                        textServer.Text = mx;
                     }
+                }
 
-
+                else
+                {
+                    if (textServer.Text == "")
+                    {
+                        MessageBox.Show("Please ensure a recipient server has been entered.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        buttonSend.Enabled = true;
+                        return;
+                    }
+                    client.Host = textServer.Text; //will throw an error if client.Host is set to an empty string
+                }
 
 
 
@@ -367,20 +357,18 @@ namespace EmailTests
                     }
                 }
                     
+                /* -----------------------------------
+                 * EMAIL PROPERTIES
+                 * -----------------------------------*/
+                mail.To.Add(textTo.Text);
 
-
-                    /* -----------------------------------
-                     * EMAIL PROPERTIES
-                     * -----------------------------------*/
-                    mail.To.Add(textTo.Text);
-
-                    if (checkSpecifyP2.Checked == false)
-                    {
-                        mail.From = new MailAddress(textFrom.Text);
-                        mail.Headers.Add("Return-Path", "blah@blah.com");
-                    }
-                    else
-                    {
+                if (checkSpecifyP2.Checked == false)
+                {
+                    mail.From = new MailAddress(textFrom.Text);
+                    mail.Headers.Add("Return-Path", "blah@blah.com");
+                }
+                else
+                {
 
                     /* -----------------------------------
                      * ORIGIAL CODE FOR THIS BLOCK
@@ -391,154 +379,113 @@ namespace EmailTests
 
                     //P2 (MailFrom)
                     mail.From = new MailAddress(textFromP2.Text);
-                    
-                    
-
-
-                    /* -----------------------------------
-                     * ORIGIAL CODE FOR 2.6.0 which is broken
-                     * -----------------------------------                    
-                        mail.From = new MailAddress(textFrom.Text);
-                        mail.Headers.Add("Resent-From", textFromP2.Text);
-                     *-----------------------------------*/
-
-                    //doesn't work
-                    //mail.From = new MailAddress(textFromP2.Text);
-                    //mail.Headers.Add("Return-Path", textFrom.Text);
-
-
                 }
 
                 if (checkSpecifyReplyTo.Checked == true)
-                    {
-                        mail.ReplyToList.Add(textReplyTo.Text);
-                    }
-
-                    if (checkDateAppend.Checked == true)
-                    {
-                        textSubjectFinal = textSubject.Text + " <" + currentDateTime + ">";
-                    }
-                    else
-                    {
-                        textSubjectFinal = textSubject.Text;
-                    }
-
-                    mail.Subject = textSubjectFinal;
-                    mail.Body = textBody.Text;
-
-                    //Add the generated GUID as a message ID
-                    mail.Headers.Add("Message-ID", messageId);
-
-
-                    //Handle custom header additions
-                    if (checkAddCustomHeader.Checked == true)
-                    {
-                        //ensure both text boxes contain the same number of lines. If not throw an exception
-                        if ((textBoxHeaderX.Lines.Length.ToString()) != (textBoxHeaderValue.Lines.Length.ToString()))
-                        {
-                            throw new ApplicationException("Ensure the Custom Header and Value text boxes have the same number of lines.");
-                        }
-                        else
-                        {
-                            //StringReader readerXValue = new StringReader(textBoxHeaderValue.Text);
-                            //http://stackoverflow.com/questions/75401/uses-of-using-in-c-sharp
-                            using (StringReader readerXHeader = new StringReader(textBoxHeaderX.Text), readerXValue = new StringReader(textBoxHeaderValue.Text))
-                            {
-                                string lineXHeader = string.Empty;
-                                string lineXValue = string.Empty;
-                                do
-                                {
-                                    lineXHeader = readerXHeader.ReadLine();
-                                    lineXValue = readerXValue.ReadLine();
-                                    if (lineXHeader != null & lineXValue != null)
-                                    {
-                                        mail.Headers.Add(lineXHeader, lineXValue);                                     
-                                    }
-
-                                } while (lineXHeader != null);
-                            }
-                        }
-                        //mail.Headers.Add(textHeader.Text, textHeaderValue.Text);
-                    }
-
-                    /* -----------------------------------
-                     * ATTACHMENT HANDLING
-                     * -----------------------------------*/
-                    //If EICAR testing is selected
-                    if (rbEICAR.Checked == true)
-                    {
-
-                        //MemoryStream allows us to attach the EICAR.txt file which we create on the fly in memory. 
-                        //This means we don't need to first create it locally on the machine and then worry about 
-                        //deleting it when the message is sent.
-
-                        byte[] data = GetData();
-                        MemoryStream ms = new MemoryStream(data);
-                        mail.Attachments.Add(new Attachment(ms, "eicar.txt", "text/plain"));
-                    }
-
-                    //If EICAR testing is not selected, lets check to see if an attachment has been added                
-                    else if (listBoxAttachment.Items.Count != 0)
-                    {
-                        foreach (string spidey in listBoxAttachment.Items)
-                        {
-                            mail.Attachments.Add(new Attachment(spidey));
-                        }
-                    }
-
-                    client.Send(mail); //sends the message
-
-                    //close mail connection
-                    client.Dispose();
-                    mail.Dispose();
-
-                    dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Success", textServer.Text, messageId);
-                    columnResize();
-                    
-                    //string yayMessage;
-                    if (checkBoxServerName.Checked == false)
-                    {
-                        MessageBox.Show("The message was sent to " + client.Host + ".", "Sweet!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        /*
-                        yayMessage = "The message was sent to " + client.Host + ".";
-                            MessagesForm mf = new MessagesForm(yayMessage, "Sweet!", "Nice!");
-                            //mf.Show(); //will allow the form to lose focus
-                            mf.ShowDialog(); //will prevent the form from losing focus
-                        */
-                    }
-                    else
-                    {
-                        MessageBox.Show("The message was sent!", "Sweet!", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    /*
-                        yayMessage = "The message was sent to " + client.Host + ".";
-                        MessagesForm mf = new MessagesForm(yayMessage, "Sweet!", "Nice!");
-                        //mf.Show(); //will allow the form to lose focus
-                        mf.ShowDialog(); //will prevent the form from losing focus
-                    */
-                    }
-
-
-
-
-            } //end of try
-                catch (Exception ex)
                 {
-                /*
-                MessageBox.Show("Error: " + ex.Message, "Error (╯°□°)╯︵ ┻━┻", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                */
-        
-                    dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Error: " + ex.Message, textServer.Text, "");
-                    columnResize();
-
-                    string errorMessage = "Error: " + ex.Message;
-                    MessagesForm mf = new MessagesForm(errorMessage, "Error (╯°□°)╯︵ ┻━┻", "Close");
-                    //mf.Show(); //will allow the form to lose focus
-                    mf.ShowDialog(); //will prevent the form from losing focus
-                
+                    mail.ReplyToList.Add(textReplyTo.Text);
                 }
 
-                //enable our send button again
-                buttonSend.Enabled = true;
+                if (checkDateAppend.Checked == true)
+                {
+                    textSubjectFinal = textSubject.Text + " <" + currentDateTime + ">";
+                }
+                else
+                {
+                    textSubjectFinal = textSubject.Text;
+                }
+
+                mail.Subject = textSubjectFinal;
+                mail.Body = textBody.Text;
+
+                //Add the generated GUID as a message ID
+                mail.Headers.Add("Message-ID", messageId);
+
+
+                //Handle custom header additions
+                if (checkAddCustomHeader.Checked == true)
+                {
+                    //ensure both text boxes contain the same number of lines. If not throw an exception
+                    if ((textBoxHeaderX.Lines.Length.ToString()) != (textBoxHeaderValue.Lines.Length.ToString()))
+                    {
+                        throw new ApplicationException("Ensure the Custom Header and Value text boxes have the same number of lines.");
+                    }
+                    else
+                    {
+                        //StringReader readerXValue = new StringReader(textBoxHeaderValue.Text);
+                        //http://stackoverflow.com/questions/75401/uses-of-using-in-c-sharp
+                        using (StringReader readerXHeader = new StringReader(textBoxHeaderX.Text), readerXValue = new StringReader(textBoxHeaderValue.Text))
+                        {
+                            string lineXHeader = string.Empty;
+                            string lineXValue = string.Empty;
+                            do
+                            {
+                                lineXHeader = readerXHeader.ReadLine();
+                                lineXValue = readerXValue.ReadLine();
+                                if (lineXHeader != null & lineXValue != null)
+                                {
+                                    mail.Headers.Add(lineXHeader, lineXValue);                                     
+                                }
+
+                            } while (lineXHeader != null);
+                        }
+                    }
+                }
+
+                /* -----------------------------------
+                 * ATTACHMENT HANDLING
+                 * -----------------------------------*/
+                //If EICAR testing is selected
+                if (rbEICAR.Checked == true)
+                {
+
+                    //MemoryStream allows us to attach the EICAR.txt file which we create on the fly in memory. 
+                    //This means we don't need to first create it locally on the machine and then worry about 
+                    //deleting it when the message is sent.
+
+                    byte[] data = GetData();
+                    MemoryStream ms = new MemoryStream(data);
+                    mail.Attachments.Add(new Attachment(ms, "eicar.txt", "text/plain"));
+                }
+
+                //If EICAR testing is not selected, lets check to see if an attachment has been added                
+                else if (listBoxAttachment.Items.Count != 0)
+                {
+                    foreach (string spidey in listBoxAttachment.Items)
+                    {
+                        mail.Attachments.Add(new Attachment(spidey));
+                    }
+                }
+
+                client.Send(mail); //sends the message
+
+                //close mail connection
+                client.Dispose();
+                mail.Dispose();
+
+                dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Success", textServer.Text, messageId);
+                columnResize();
+                    
+                MessageBox.Show("The message was sent to " + client.Host + ".", "Sweet!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            } //end of try
+
+            catch (Exception ex)
+            {
+
+        
+                dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Error: " + ex.Message, textServer.Text, "");
+                columnResize();
+
+                string errorMessage = "Error: " + ex.Message;
+                MessagesForm mf = new MessagesForm(errorMessage, "Error (╯°□°)╯︵ ┻━┻", "Close");
+                //mf.Show(); //will allow the form to lose focus
+                mf.ShowDialog(); //will prevent the form from losing focus
+                
+            }
+
+            //enable our send button again
+            buttonSend.Enabled = true;
 
             //}
             //MessageBox.Show("done sending all messages");
@@ -744,7 +691,6 @@ namespace EmailTests
                 return "microsoft-com.mail.protection.outlook.com";
             }
 
-
             string mySubString = "mail exchanger = ";
             string command = "nslookup -type=mx " + domain;
             string result = null;
@@ -752,7 +698,6 @@ namespace EmailTests
             int mxComingNext = 0;
             int mxPriComingNext = 0;
             int mxCount = 0;
-
 
             //Sometimes a DNS query times out the first attempt, but is succesfull after the first. If the first attempt is failed, this for
             //loop will re-run the query a second time. If succesfull the first time this loop will only run once. At most 2 attempts will be made.
@@ -834,7 +779,6 @@ namespace EmailTests
 
         public string getOptions()
         {
-            
             string selectedOptions = null;
 
             if (rbGtube.Checked)
@@ -860,8 +804,7 @@ namespace EmailTests
             if ((listBoxAttachment.Items.Count) != 0 && (rbEICAR.Checked == false))
             {
                 selectedOptions += "Attachments; ";
-            }
-            
+            }   
             if (selectedOptions != null)
             {
                 //removes the trailing space and comma from the string
@@ -936,15 +879,12 @@ namespace EmailTests
                 //int borderWidth = (this.Width - this.ClientSize.Width);
                 int newWidth = initialViewLogWidth;
 
-
                 this.Width = newWidth;
                 this.MinimumSize = new Size(newWidth, this.Height);
                 this.MaximumSize = new Size(5000000, this.Height);
 
                 dataGridView1.Width = initialDataGridWidth;
                 dataGridView1.Anchor = (AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top);
-
-                
 
                 this.FormBorderStyle = FormBorderStyle.Sizable;
             }
@@ -969,8 +909,7 @@ namespace EmailTests
         }
         
         private void buttonExportLog_Click(object sender, EventArgs e)
-        {
-            
+        {            
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "CSV  File (*.csv)|*.csv";
             sfd.FileName = "log export.csv";
@@ -1039,6 +978,7 @@ namespace EmailTests
                 mf.ShowDialog(); //will prevent the form from losing focus
             }
         }
+
         /*
         As error messages are often long, the Result column will be made very wide to fit the text.The following code will resize any column that is larger
         than maxDataGridColumnSize, down to the size set in maxDataGridColumnSize
