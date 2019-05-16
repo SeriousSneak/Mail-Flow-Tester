@@ -124,8 +124,13 @@
  *                            - input validation test for timeout text box (ensures value is a number)
  *                            - with server test not enabled, test app at home
  *                            - if "recipient server" was checked but nothing was entered in the text box the error would not trigger properly. This is now fixed.
+ *                            - with the move to github the application no longer checks for updates. I need to figure out where to host the install so I can have it check
+ *                              for updates again
  *                            
- * Future - Have app link directly in Start Menu, as opposed to being in a folder which is in the Start Menu. I don't know if this is possible with click to run
+ * Future  
+ *        - with the move to github the application no longer checks for updates. I need to figure out where to host the install so I can have it check
+ *          for updates again
+ *        - Have app link directly in Start Menu, as opposed to being in a folder which is in the Start Menu. I don't know if this is possible with click to run
  *        - When adding a different P2 address, is there any way to tell the app to not add the header, "Sender," which casuses the (sent on behalf of) name in Outlook?
  *        - when opening the log, should the initial width be that of the datagrid? Currently the log always opens to the same width, which is the initial datagrid view
  *          width with no content present
