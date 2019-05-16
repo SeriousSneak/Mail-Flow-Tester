@@ -117,15 +117,16 @@
  *                              now been cleaned up.
  *                            - the code that detects if an end point is reachable has been optimized and better calls out a connection issue if the end point cannot be reached  
  *                             
- *   3.0.0 (May 16, 2019)     - launch on Github!
+ *   3.0.1 (May 16, 2019)     - launch on Github!
  *                            - code cleanup
  *                            - Added check box to disable the "is recipient server reachable" test
  *                            - "sending message timeout" is now configurable
  *                            - input validation test for timeout text box (ensures value is a number)
  *                            - with server test not enabled, test app at home
  *                            - if "recipient server" was checked but nothing was entered in the text box the error would not trigger properly. This is now fixed.
- *                            - with the move to github the application no longer checks for updates. I need to figure out where to host the install so I can have it check
- *                              for updates again
+ *                            - application now checks for updates from GitHub - https://github.com/SeriousSneak/Mail-Flow-Tester/tree/master/Install%20for%20Windows
+ *                              
+ *                           
  *                            
  * Future  
  *        - with the move to github the application no longer checks for updates. I need to figure out where to host the install so I can have it check

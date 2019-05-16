@@ -130,7 +130,8 @@
  - with server test not enabled, test app at home
  - if "recipient server" was checked but nothing was entered in the text 
     box the error would not trigger properly. This is now fixed. 
-
+ - application does not yet check for updates
+    
 2.8.0 (March 21, 2019)
  - double clicking on a cell in the log now pops up a new window with a text
     box which contains the contents of that cell. This allows text that may be 

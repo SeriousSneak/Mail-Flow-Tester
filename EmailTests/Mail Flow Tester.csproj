@@ -23,7 +23,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <UpdateUrl>\\tkfiltoolbox\tools\mailflowtester\release\</UpdateUrl>
+    <UpdateUrl>https://github.com/SeriousSneak/Mail-Flow-Tester/tree/master/Install%2520for%2520Windows/</UpdateUrl>
     <ProductName>Mail Flow Tester</ProductName>
     <PublisherName>Mail Flow Tester</PublisherName>
     <WebPage>publish.htm</WebPage>
