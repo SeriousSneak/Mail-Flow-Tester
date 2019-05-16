@@ -122,7 +122,7 @@
   </data>
   <data name="textBox1.Text" xml:space="preserve">
     <value>3.0.0 (May 16, 2019)
- - lauch on Github!
+ - launch on Github!
  - code cleanup (comments, redundant lines, formatting)
  - added check box to disable the "is recipient server reachable" test
  - "sending message timeout" is now configurable
