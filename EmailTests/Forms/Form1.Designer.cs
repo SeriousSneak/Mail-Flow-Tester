@@ -250,7 +250,7 @@
             // textTimeOut
             // 
             this.textTimeOut.Location = new System.Drawing.Point(273, 63);
-            this.textTimeOut.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textTimeOut.Margin = new System.Windows.Forms.Padding(2);
             this.textTimeOut.Name = "textTimeOut";
             this.textTimeOut.Size = new System.Drawing.Size(32, 20);
             this.textTimeOut.TabIndex = 28;
@@ -261,7 +261,7 @@
             // 
             this.checkServerReachable.AutoSize = true;
             this.checkServerReachable.Location = new System.Drawing.Point(9, 65);
-            this.checkServerReachable.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkServerReachable.Margin = new System.Windows.Forms.Padding(2);
             this.checkServerReachable.Name = "checkServerReachable";
             this.checkServerReachable.Size = new System.Drawing.Size(157, 17);
             this.checkServerReachable.TabIndex = 27;
@@ -295,7 +295,7 @@
             // checkEnableAdvanced
             // 
             this.checkEnableAdvanced.AutoSize = true;
-            this.checkEnableAdvanced.Location = new System.Drawing.Point(8, 88);
+            this.checkEnableAdvanced.Location = new System.Drawing.Point(9, 88);
             this.checkEnableAdvanced.Name = "checkEnableAdvanced";
             this.checkEnableAdvanced.Size = new System.Drawing.Size(112, 17);
             this.checkEnableAdvanced.TabIndex = 24;
@@ -762,7 +762,7 @@
             this.buttonExportLog.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.buttonExportLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonExportLog.Location = new System.Drawing.Point(434, 292);
-            this.buttonExportLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonExportLog.Margin = new System.Windows.Forms.Padding(2);
             this.buttonExportLog.Name = "buttonExportLog";
             this.buttonExportLog.Size = new System.Drawing.Size(74, 23);
             this.buttonExportLog.TabIndex = 24;
