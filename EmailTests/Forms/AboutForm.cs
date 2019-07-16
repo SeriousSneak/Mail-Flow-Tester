@@ -23,17 +23,7 @@ namespace EmailTests
             this.Close();
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            try
-            {
-                Process.Start(@"\\tkfiltoolbox\tools\mailflowtester\release\Mail Flow Tester read me.docx");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: " + ex.Message + ". Ensure you are connected to corpnet.", "Error (╯°□°)╯︵ ┻━┻", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+
 
         private void LinkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
