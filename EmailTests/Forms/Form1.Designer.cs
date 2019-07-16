@@ -260,6 +260,8 @@
             // checkServerReachable
             // 
             this.checkServerReachable.AutoSize = true;
+            this.checkServerReachable.Checked = true;
+            this.checkServerReachable.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkServerReachable.Location = new System.Drawing.Point(9, 65);
             this.checkServerReachable.Margin = new System.Windows.Forms.Padding(2);
             this.checkServerReachable.Name = "checkServerReachable";

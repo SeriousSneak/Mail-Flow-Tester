@@ -126,8 +126,16 @@
  *                            - if "recipient server" was checked but nothing was entered in the text box the error would not trigger properly. This is now fixed.
  *                            - application currently does not check for updates
  *                              
- *                           
- *                            
+ *  3.1.0 (August 2019)       - migrating the app from SmtpClient Class in DotNet (https://docs.microsoft.com/en-us/dotnet/api/system.net.mail.smtpclient?view=netframework-4.7.2), which 
+ *                            - has been depreciated, to MailKit and MimeKit (https://github.com/jstedfast/MailKit and https://github.com/jstedfast/MimeKit)
+ *                            To do:
+ *                            - figure out how to make EICAR Attachment work with MailKit
+ *                            - completely test app with all different options 
+ *                            http://www.mimekit.net/docs/html/N_MailKit.htm
+ *                            https://csharp.hotexamples.com/examples/MailKit.Net.Smtp/SmtpClient/Send/php-smtpclient-send-method-examples.html
+ *                            https://stackoverflow.com/questions/37853903/can-i-send-files-via-email-using-mailkit
+ *                            https://github.com/jstedfast/MailKit
+ *                            - clean up code once verified that everything works with MailKit
  * Future  
  *        - with the move to github the application no longer checks for updates. I need to figure out where to host the install so I can have it check
  *          for updates again
@@ -135,8 +143,6 @@
  *        - When adding a different P2 address, is there any way to tell the app to not add the header, "Sender," which casuses the (sent on behalf of) name in Outlook?
  *        - when opening the log, should the initial width be that of the datagrid? Currently the log always opens to the same width, which is the initial datagrid view
  *          width with no content present
- *        - SmtpClient Class has apparently een depreciated, https://docs.microsoft.com/en-us/dotnet/api/system.net.mail.smtpclient?view=netframework-4.7.2. Recommendation
- *          is to use https://github.com/jstedfast/MailKit and https://github.com/jstedfast/MimeKit instead.
  *        - Have up lookup MX records. Maybe pop a status window when the lookup is happening? Or a status bar at the bottom of the window? I like the pop window better.
  *        - Hyper link Gtube and CICAR to Wiki articles
  *        - Drag and drop attachements to the attachments window
@@ -153,10 +159,13 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using System.Net.Mail;
+//using System.Net.Mail;
 using System.IO; //Needed for MemoryStream
 using System.Net.Sockets;
 
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
 
 
 namespace EmailTests
@@ -210,7 +219,7 @@ namespace EmailTests
             try
             {
                 SmtpClient client = new SmtpClient();
-                MailMessage mail = new MailMessage();
+                MimeMessage mail = new MimeMessage();
                 string[] row = new string[] {"bogus"};
 
                 /*Input validation for Port*/
@@ -233,22 +242,26 @@ namespace EmailTests
                 /* -----------------------------------
                  * RECEIVING SERVER SETTINGS
                  * -----------------------------------*/
-                client.Port = Convert.ToInt32(textPort.Text);
-                client.Timeout = 60000;  //10 second timeout
+                //client.Port = Convert.ToInt32(textPort.Text);
+                client.Timeout = 60000;  //time-out in milliseconds (if 100,000 is entered, that is 100 seconds)
 
+                
+                /*
                 if (checkForceTLS.Checked == true)
                 {
-                    client.EnableSsl = true;
+                    client.EnableSSL = true;
                 }
                 else
                 {
                     client.EnableSsl = false;
                 }
+                */
 
+                /*
                 client.DeliveryFormat = SmtpDeliveryFormat.International;
                 client.DeliveryMethod = SmtpDeliveryMethod.Network;
                 client.UseDefaultCredentials = false;
-
+                */
 
                 //this does a DNS lookup if the checkbox is not checked
                 if (checkBoxServerName.Checked == false)
@@ -292,7 +305,7 @@ namespace EmailTests
                     }
                     else
                     {
-                        client.Host = mx;
+                        //client.Host = mx;
                         textServer.Text = mx;
                     }
                 }
@@ -305,7 +318,8 @@ namespace EmailTests
                         buttonSend.Enabled = true;
                         return;
                     }
-                    client.Host = textServer.Text; //will throw an error if client.Host is set to an empty string
+
+                    //client.Host = textServer.Text; //will throw an error if client.Host is set to an empty string
                 }
 
 
@@ -342,7 +356,7 @@ namespace EmailTests
                 //    throw new ApplicationException("Failed to connect to " + textServer.Text + " on port " + textPort.Text + ".");
                 //}
 
-                //The bellow replaced the above code in the Mar 21, 2019 release (version 2.8.0). See the commens on the above block which talks about the problem with it.
+                //The bellow replaced the above code in the Mar 21, 2019 release (version 2.8.0). See the comments on the above block which talks about the problem with it.
                 //https://stackoverflow.com/questions/1062035/how-to-configure-socket-connect-timeout
 
 
@@ -362,16 +376,17 @@ namespace EmailTests
                         socket.Disconnect(true);  //close this socket - this line is new in version 2.3.5
                     }
                 }
-                    
+
                 /* -----------------------------------
                  * EMAIL PROPERTIES
                  * -----------------------------------*/
-                mail.To.Add(textTo.Text);
+                //mail.To.Add(textTo.Text);
+                mail.To.Add(new MailboxAddress(textTo.Text));
 
                 if (checkSpecifyP2.Checked == false)
                 {
-                    mail.From = new MailAddress(textFrom.Text);
-                    mail.Headers.Add("Return-Path", "blah@blah.com");
+                    //mail.From = new MailAddress(textFrom.Text);
+                    mail.From.Add(new MailboxAddress(textFrom.Text));
                 }
                 else
                 {
@@ -381,15 +396,18 @@ namespace EmailTests
                      * -----------------------------------*/
                     //P1 (From). This will add a "Sender" header with the value of mail.From. 
                     //This will cause Outlook to show "from@domain.com on behalf of sender@domain.com"
-                    mail.Sender = new MailAddress(textFrom.Text);
+                    //mail.Sender = new MailAddress(textFrom.Text);
+                    mail.Sender.Address = textFrom.Text;
 
                     //P2 (MailFrom)
-                    mail.From = new MailAddress(textFromP2.Text);
+                    //mail.From = new MailAddress(textFromP2.Text);
+                    mail.From.Add(new MailboxAddress(textFromP2.Text));
                 }
 
                 if (checkSpecifyReplyTo.Checked == true)
                 {
-                    mail.ReplyToList.Add(textReplyTo.Text);
+                    //mail.ReplyToList.Add(textReplyTo.Text);
+                    mail.ReplyTo.Add(new MailboxAddress(textReplyTo.Text));
                 }
 
                 if (checkDateAppend.Checked == true)
@@ -402,7 +420,16 @@ namespace EmailTests
                 }
 
                 mail.Subject = textSubjectFinal;
-                mail.Body = textBody.Text;
+                //mail.Body = textBody.Text;
+                /*
+                mail.Body = new TextPart("plain")
+                {
+                    Text = textBody.Text
+                };
+                */
+
+                BodyBuilder builder = new BodyBuilder();
+                builder.TextBody = textBody.Text;
 
                 //Add the generated GUID as a message ID
                 mail.Headers.Add("Message-ID", messageId);
@@ -451,28 +478,35 @@ namespace EmailTests
 
                     byte[] data = GetData();
                     MemoryStream ms = new MemoryStream(data);
-                    mail.Attachments.Add(new Attachment(ms, "eicar.txt", "text/plain"));
+                    //MailKit - not sure how to do this yet
+                    //mail.Attachments.Add(new Attachment(ms, "eicar.txt", "text/plain"));
+                    //builder.Attachments.Add(ms)
                 }
-
+                
                 //If EICAR testing is not selected, lets check to see if an attachment has been added                
                 else if (listBoxAttachment.Items.Count != 0)
                 {
                     foreach (string spidey in listBoxAttachment.Items)
                     {
-                        mail.Attachments.Add(new Attachment(spidey));
+                        //mail.Attachments.Add(new Attachment(spidey));
+                        builder.Attachments.Add(spidey);
                     }
                 }
 
+                mail.Body = builder.ToMessageBody();
+
+                client.Connect(textServer.Text, Convert.ToInt32(textPort.Text), false);
                 client.Send(mail); //sends the message
 
                 //close mail connection
-                client.Dispose();
-                mail.Dispose();
+                client.Disconnect(true);
+                //client.Dispose();
+                //mail.Dispose();
 
                 dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Success", textServer.Text, messageId);
                 columnResize();
                     
-                MessageBox.Show("The message was sent to " + client.Host + ".", "Sweet!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("The message was sent to " + textServer.Text + ".", "Sweet!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             } //end of try
 
