@@ -802,7 +802,7 @@
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Mail Flow Tester v3.0";
+            this.Text = "Mail Flow Tester v3.1 Dev";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form1_HelpButtonClicked);
             this.gbOptions.ResumeLayout(false);
             this.gbOptions.PerformLayout();
