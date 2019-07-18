@@ -126,17 +126,18 @@
  *                            - if "recipient server" was checked but nothing was entered in the text box the error would not trigger properly. This is now fixed.
  *                            - application currently does not check for updates
  *                              
- *  3.1.0 (August 2019)       - migrating the app from SmtpClient Class in DotNet (https://docs.microsoft.com/en-us/dotnet/api/system.net.mail.smtpclient?view=netframework-4.7.2), which 
+ *   3.1.0 (July 2019)        - migrating the app from SmtpClient Class in DotNet (https://docs.microsoft.com/en-us/dotnet/api/system.net.mail.smtpclient?view=netframework-4.7.2), which 
  *                            - has been depreciated, to MailKit and MimeKit (https://github.com/jstedfast/MailKit and https://github.com/jstedfast/MimeKit)
- *                            To do:
- *                            - figure out how to make EICAR Attachment work with MailKit
- *                            - completely test app with all different options 
- *                            http://www.mimekit.net/docs/html/N_MailKit.htm
- *                            https://csharp.hotexamples.com/examples/MailKit.Net.Smtp/SmtpClient/Send/php-smtpclient-send-method-examples.html
- *                            https://stackoverflow.com/questions/37853903/can-i-send-files-via-email-using-mailkit
- *                            https://github.com/jstedfast/MailKit
- *                            - clean up code once verified that everything works with MailKit
+ *                            - http://www.mimekit.net/docs/html/N_MailKit.htm
+ *                            - https://csharp.hotexamples.com/examples/MailKit.Net.Smtp/SmtpClient/Send/php-smtpclient-send-method-examples.html
+ *                            - https://stackoverflow.com/questions/37853903/can-i-send-files-via-email-using-mailkit
+ *                            - https://github.com/jstedfast/MailKit
+ *                            - with the move to MailKit & MimeKit, code related to the SmtpClient Class in DotNet has now been removed
+ *                            - application now creates an SMTP log (smtp.log) in the same directory where the executable resides
+ *                            
  * Future  
+ *        - have SMTP log output to a window? Maybe make a new log checkbox which will show the SMTP log in an attached window? Or just have a link that will open up 
+ *          the folder where the smtp log file exists?
  *        - with the move to github the application no longer checks for updates. I need to figure out where to host the install so I can have it check
  *          for updates again
  *        - Have app link directly in Start Menu, as opposed to being in a folder which is in the Start Menu. I don't know if this is possible with click to run
@@ -144,7 +145,6 @@
  *        - when opening the log, should the initial width be that of the datagrid? Currently the log always opens to the same width, which is the initial datagrid view
  *          width with no content present
  *        - Have up lookup MX records. Maybe pop a status window when the lookup is happening? Or a status bar at the bottom of the window? I like the pop window better.
- *        - Hyper link Gtube and CICAR to Wiki articles
  *        - Drag and drop attachements to the attachments window
  *        - option to have the app send x number of messages when Send is clicked (would need to have some sort of progress window appear when this is happening). Maybe change subject
  *          slightly for all sent messages (prepend with the message number. ex. 1, 2, 3)
@@ -159,14 +159,12 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-//using System.Net.Mail;
-using System.IO; //Needed for MemoryStream
+using System.IO;
 using System.Net.Sockets;
-
 using MailKit.Net.Smtp;
-using MailKit;
 using MimeKit;
-
+using MailKit.Security;
+using MailKit;
 
 namespace EmailTests
 {
@@ -214,11 +212,13 @@ namespace EmailTests
             gui = Guid.NewGuid();
             String messageId = "<" + gui.ToString() + "@mft.local>";
 
+            
                 
 
             try
             {
-                SmtpClient client = new SmtpClient();
+                //smtp.log file will be created in the same directly that the executable is launched from
+                SmtpClient client = new SmtpClient(new ProtocolLogger("smtp.log"));
                 MimeMessage mail = new MimeMessage();
                 string[] row = new string[] {"bogus"};
 
@@ -242,26 +242,7 @@ namespace EmailTests
                 /* -----------------------------------
                  * RECEIVING SERVER SETTINGS
                  * -----------------------------------*/
-                //client.Port = Convert.ToInt32(textPort.Text);
                 client.Timeout = 60000;  //time-out in milliseconds (if 100,000 is entered, that is 100 seconds)
-
-                
-                /*
-                if (checkForceTLS.Checked == true)
-                {
-                    client.EnableSSL = true;
-                }
-                else
-                {
-                    client.EnableSsl = false;
-                }
-                */
-
-                /*
-                client.DeliveryFormat = SmtpDeliveryFormat.International;
-                client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                client.UseDefaultCredentials = false;
-                */
 
                 //this does a DNS lookup if the checkbox is not checked
                 if (checkBoxServerName.Checked == false)
@@ -305,7 +286,6 @@ namespace EmailTests
                     }
                     else
                     {
-                        //client.Host = mx;
                         textServer.Text = mx;
                     }
                 }
@@ -318,8 +298,6 @@ namespace EmailTests
                         buttonSend.Enabled = true;
                         return;
                     }
-
-                    //client.Host = textServer.Text; //will throw an error if client.Host is set to an empty string
                 }
 
 
@@ -385,28 +363,16 @@ namespace EmailTests
 
                 if (checkSpecifyP2.Checked == false)
                 {
-                    //mail.From = new MailAddress(textFrom.Text);
                     mail.From.Add(new MailboxAddress(textFrom.Text));
                 }
                 else
                 {
-
-                    /* -----------------------------------
-                     * ORIGIAL CODE FOR THIS BLOCK
-                     * -----------------------------------*/
-                    //P1 (From). This will add a "Sender" header with the value of mail.From. 
-                    //This will cause Outlook to show "from@domain.com on behalf of sender@domain.com"
-                    //mail.Sender = new MailAddress(textFrom.Text);
-                    mail.Sender.Address = textFrom.Text;
-
-                    //P2 (MailFrom)
-                    //mail.From = new MailAddress(textFromP2.Text);
+                    mail.Sender = new MailboxAddress(textFrom.Text);
                     mail.From.Add(new MailboxAddress(textFromP2.Text));
                 }
 
                 if (checkSpecifyReplyTo.Checked == true)
                 {
-                    //mail.ReplyToList.Add(textReplyTo.Text);
                     mail.ReplyTo.Add(new MailboxAddress(textReplyTo.Text));
                 }
 
@@ -420,19 +386,9 @@ namespace EmailTests
                 }
 
                 mail.Subject = textSubjectFinal;
-                //mail.Body = textBody.Text;
-                /*
-                mail.Body = new TextPart("plain")
-                {
-                    Text = textBody.Text
-                };
-                */
-
+                mail.MessageId = messageId; //Add the generated GUID as a message ID
                 BodyBuilder builder = new BodyBuilder();
                 builder.TextBody = textBody.Text;
-
-                //Add the generated GUID as a message ID
-                mail.Headers.Add("Message-ID", messageId);
 
 
                 //Handle custom header additions
@@ -445,7 +401,6 @@ namespace EmailTests
                     }
                     else
                     {
-                        //StringReader readerXValue = new StringReader(textBoxHeaderValue.Text);
                         //http://stackoverflow.com/questions/75401/uses-of-using-in-c-sharp
                         using (StringReader readerXHeader = new StringReader(textBoxHeaderX.Text), readerXValue = new StringReader(textBoxHeaderValue.Text))
                         {
@@ -471,16 +426,11 @@ namespace EmailTests
                 //If EICAR testing is selected
                 if (rbEICAR.Checked == true)
                 {
-
-                    //MemoryStream allows us to attach the EICAR.txt file which we create on the fly in memory. 
-                    //This means we don't need to first create it locally on the machine and then worry about 
-                    //deleting it when the message is sent.
+                    //The attachment is created right in the app. This means we don't need to first create it locally 
+                    //on the machine and then worry about deleting it when the message is sent.
 
                     byte[] data = GetData();
-                    MemoryStream ms = new MemoryStream(data);
-                    //MailKit - not sure how to do this yet
-                    //mail.Attachments.Add(new Attachment(ms, "eicar.txt", "text/plain"));
-                    //builder.Attachments.Add(ms)
+                    builder.Attachments.Add("eicar.txt", data);
                 }
                 
                 //If EICAR testing is not selected, lets check to see if an attachment has been added                
@@ -488,20 +438,24 @@ namespace EmailTests
                 {
                     foreach (string spidey in listBoxAttachment.Items)
                     {
-                        //mail.Attachments.Add(new Attachment(spidey));
                         builder.Attachments.Add(spidey);
                     }
                 }
 
                 mail.Body = builder.ToMessageBody();
+                
+                if (checkForceTLS.Checked == true)
+                {
+                    client.Connect(textServer.Text, Convert.ToInt32(textPort.Text), SecureSocketOptions.StartTls);
+                }
+                else
+                {
+                    client.Connect(textServer.Text, Convert.ToInt32(textPort.Text), SecureSocketOptions.None);
+                }
+                client.Send(mail);
 
-                client.Connect(textServer.Text, Convert.ToInt32(textPort.Text), false);
-                client.Send(mail); //sends the message
-
-                //close mail connection
                 client.Disconnect(true);
-                //client.Dispose();
-                //mail.Dispose();
+                client.ProtocolLogger.Dispose(); //without this, smtp.log will remain open by the process and subsequent mail sends will be unable to write to the file
 
                 dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Success", textServer.Text, messageId);
                 columnResize();
@@ -512,8 +466,6 @@ namespace EmailTests
 
             catch (Exception ex)
             {
-
-        
                 dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Error: " + ex.Message, textServer.Text, "");
                 columnResize();
 
@@ -585,7 +537,6 @@ namespace EmailTests
             string eicar = @"X5O!P%@AP[4\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*"; //eicar string
             byte[] data = Encoding.ASCII.GetBytes(eicar);
             return data;
-
         }
 
 
@@ -650,13 +601,9 @@ namespace EmailTests
             listBoxAttachment.Items.Clear();
         }
 
-
-
-
         //if user right clicks a cell in dataGridView1, select the whole row
         public void dataGridView1_MouseDown(object sender, MouseEventArgs e)
         {
-
             if (e.Button == MouseButtons.Right)
             {
                 var hti = dataGridView1.HitTest(e.X, e.Y);
@@ -666,7 +613,6 @@ namespace EmailTests
                 {
                     dataGridView1.Rows[hti.RowIndex].Selected = true;
                 }
-
             }
         }
 
@@ -711,12 +657,10 @@ namespace EmailTests
             if (checkBoxServerName.Checked == true)
             {
                 textServer.Enabled = true;
-                //textPort.Enabled = true;
             }
             else
             {
                 textServer.Enabled = false;
-                //textPort.Enabled = false;
                 textServer.Text = "";
             }
         }
@@ -865,8 +809,6 @@ namespace EmailTests
             //find the height of the title bar
             Rectangle screenRectangle = RectangleToScreen(this.ClientRectangle);
             int titleHeight = screenRectangle.Top - this.Top;
-            int heightAdvancedEnabled = 0;
-            //int heightAdvancedDisabled = 0;
 
             if (checkEnableAdvanced.Checked == true)
             {
@@ -877,7 +819,7 @@ namespace EmailTests
                 buttonClearLog.Location = new Point(buttonClearLog.Location.X, buttonLocation);
                 buttonExportLog.Location = new Point(buttonExportLog.Location.X, buttonLocation);
 
-                heightAdvancedEnabled = buttonSend.Location.Y + buttonSend.Height + titleHeight + (titleHeight / 2);
+                int heightAdvancedEnabled = buttonSend.Location.Y + buttonSend.Height + titleHeight + (titleHeight / 2);
                 this.MaximumSize = new Size(5000000, heightAdvancedEnabled);
 
                 if (checkLog.Checked)

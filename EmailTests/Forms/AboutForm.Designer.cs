@@ -44,18 +44,20 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 13);
+            this.label1.Location = new System.Drawing.Point(12, 16);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 13);
+            this.label1.Size = new System.Drawing.Size(110, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Mail Flow Tester";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(9, 26);
+            this.label2.Location = new System.Drawing.Point(12, 32);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 13);
+            this.label2.Size = new System.Drawing.Size(124, 17);
             this.label2.TabIndex = 1;
             this.label2.Text = "by Andrew Stobart";
             // 
@@ -64,9 +66,10 @@
             this.buttonAboutClose.BackColor = System.Drawing.Color.White;
             this.buttonAboutClose.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.buttonAboutClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonAboutClose.Location = new System.Drawing.Point(337, 366);
+            this.buttonAboutClose.Location = new System.Drawing.Point(449, 450);
+            this.buttonAboutClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.buttonAboutClose.Name = "buttonAboutClose";
-            this.buttonAboutClose.Size = new System.Drawing.Size(75, 23);
+            this.buttonAboutClose.Size = new System.Drawing.Size(100, 28);
             this.buttonAboutClose.TabIndex = 3;
             this.buttonAboutClose.Text = "Close";
             this.buttonAboutClose.UseVisualStyleBackColor = false;
@@ -75,56 +78,62 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(134, 13);
+            this.label3.Location = new System.Drawing.Point(179, 16);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(69, 13);
+            this.label3.Size = new System.Drawing.Size(92, 17);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Version 3.0.0";
+            this.label3.Text = "Version 3.1.0";
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(9, 72);
+            this.label4.Location = new System.Drawing.Point(12, 89);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(403, 61);
+            this.label4.Size = new System.Drawing.Size(537, 75);
             this.label4.TabIndex = 5;
             this.label4.Text = resources.GetString("label4.Text");
             // 
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(12, 163);
+            this.textBox1.Location = new System.Drawing.Point(16, 201);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(400, 197);
+            this.textBox1.Size = new System.Drawing.Size(532, 242);
             this.textBox1.TabIndex = 6;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 147);
+            this.label5.Location = new System.Drawing.Point(12, 181);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(64, 13);
+            this.label5.Size = new System.Drawing.Size(84, 17);
             this.label5.TabIndex = 7;
             this.label5.Text = "Change log:";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(344, 2);
+            this.pictureBox1.Location = new System.Drawing.Point(459, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(68, 67);
+            this.pictureBox1.Size = new System.Drawing.Size(91, 82);
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(9, 40);
+            this.linkLabel1.Location = new System.Drawing.Point(12, 49);
+            this.linkLabel1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(93, 13);
+            this.linkLabel1.Size = new System.Drawing.Size(124, 17);
             this.linkLabel1.TabIndex = 9;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "GitHub Repository";
@@ -132,10 +141,10 @@
             // 
             // AboutForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(424, 401);
+            this.ClientSize = new System.Drawing.Size(565, 494);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label5);
@@ -146,6 +155,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutForm";

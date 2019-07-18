@@ -121,7 +121,15 @@
     <value>This application is used to send email messages for mail flow testing. I work as a support engineer with Microsoft and support Exchange Online. I often have the need to send email messages to particular endpoints. I got tired to using Telnet for this and developed this application to assist in my work.</value>
   </data>
   <data name="textBox1.Text" xml:space="preserve">
-    <value>3.0.0 (May 16, 2019)
+    <value>3.1.0 (July 19, 2019)
+ - migrating the app from SmtpClient Class in DotNet, which has been 
+    depreciated, to MailKit and MimeKit
+ - with the move to MailKit &amp; MimeKit, code related to the SmtpClient 
+    Class in DotNet has now been removed
+ - application now creates an SMTP log (smtp.log) in the same directory 
+    where the executable resides
+
+3.0.0 (May 16, 2019)
  - launch on Github!
  - code cleanup (comments, redundant lines, formatting)
  - added check box to disable the "is recipient server reachable" test

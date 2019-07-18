@@ -23,8 +23,6 @@ namespace EmailTests
             this.Close();
         }
 
-
-
         private void LinkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://github.com/SeriousSneak/Mail-Flow-Tester/tree/master/Install%20for%20Windows");
