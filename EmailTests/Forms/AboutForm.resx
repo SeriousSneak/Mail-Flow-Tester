@@ -128,6 +128,8 @@
     Class in DotNet has now been removed
  - application now creates an SMTP log (smtp.log) in the same directory 
     where the executable resides
+ - a new button called "Open SMTP log" has been added to the log view.
+    This will open the smtp.log file in Notepad for easy access
 
 3.0.0 (May 16, 2019)
  - launch on Github!

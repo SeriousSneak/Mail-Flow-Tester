@@ -134,8 +134,10 @@
  *                            - https://github.com/jstedfast/MailKit
  *                            - with the move to MailKit & MimeKit, code related to the SmtpClient Class in DotNet has now been removed
  *                            - application now creates an SMTP log (smtp.log) in the same directory where the executable resides
+ *                            - a new button called "Open SMTP log" has been added to the log view. This will open the smtp.log file in Notepad for easy access.
  *                            
  * Future  
+ *        - clear SMTP log on app close? Not sure.
  *        - have SMTP log output to a window? Maybe make a new log checkbox which will show the SMTP log in an attached window? Or just have a link that will open up 
  *          the folder where the smtp log file exists?
  *        - with the move to github the application no longer checks for updates. I need to figure out where to host the install so I can have it check
@@ -149,7 +151,7 @@
  *        - option to have the app send x number of messages when Send is clicked (would need to have some sort of progress window appear when this is happening). Maybe change subject
  *          slightly for all sent messages (prepend with the message number. ex. 1, 2, 3)
  *----------------------------------------------------------------------------*/
-//original form size = 355, 333 (470, 409 on home monitor with 125% scaling)
+//original form size = 355, 333 (470, 445 on home monitor with 125% scaling)
 //Nov 28/14 update: When sending mail from home and I select to do a DNS lookup, the program never times out. If I
 //manually specify the server then it does timeout after 20 seconds. See http://stackoverflow.com/questions/10467476/smtpclient-timeout-doesnt-work
 
@@ -165,6 +167,7 @@ using MailKit.Net.Smtp;
 using MimeKit;
 using MailKit.Security;
 using MailKit;
+using System.Diagnostics;
 
 namespace EmailTests
 {
@@ -998,6 +1001,18 @@ namespace EmailTests
                 //mf.Show(); //will allow the form to lose focus
                 mf.ShowDialog(); //will prevent the form from losing focus
             }
+        }
+
+        private void ButtonSmtpLog_Click(object sender, EventArgs e)
+        {
+            if (File.Exists("smtp.log") == true)
+            {
+                Process.Start("notepad.exe", "smtp.log");
+            }
+            else
+            {
+                MessageBox.Show("Log file not yet created. Please send a message first.", "SMTP Log", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }         
         }
     }
 }
