@@ -136,6 +136,8 @@
  *                            - application now creates an SMTP log (smtp.log) in the same directory where the executable resides
  *                            - a new button called "Open SMTP log" has been added to the log view. This will open the smtp.log file in Notepad for easy access.
  *                            
+ *   3.1.1 (Sept 2019)        - the "Open SMTP log" button (viewable when "View Log" is selected) did not move when "Advanced Options" was selected. This has now been fixed.
+ *                            - I'm unable to add this update to the About window text box. When I try VS freezes and the designer flashes the About window
  * Future  
  *        - clear SMTP log on app close? Not sure.
  *        - have SMTP log output to a window? Maybe make a new log checkbox which will show the SMTP log in an attached window? Or just have a link that will open up 
@@ -182,6 +184,7 @@ namespace EmailTests
         int sendButtonStartingLocation = 0; //sendButton Y position
         int clearLogButtonStartingLocation = 0; //clearLogButton Y position
         int exportLogButtonStartingLocation = 0; //ExportLogButton Y position
+        int smtpLogButtonStartingLocation = 0;
         
         public Form1()
         {
@@ -194,6 +197,7 @@ namespace EmailTests
             sendButtonStartingLocation = buttonSend.Location.Y;
             clearLogButtonStartingLocation = buttonClearLog.Location.Y;
             exportLogButtonStartingLocation = buttonExportLog.Location.Y;
+            smtpLogButtonStartingLocation = buttonSmtpLog.Location.Y;
             this.ActiveControl = checkBoxServerName; //sets the active control
         }
 
@@ -821,6 +825,7 @@ namespace EmailTests
                 buttonSend.Location = new Point(buttonSend.Location.X, buttonLocation);
                 buttonClearLog.Location = new Point(buttonClearLog.Location.X, buttonLocation);
                 buttonExportLog.Location = new Point(buttonExportLog.Location.X, buttonLocation);
+                buttonSmtpLog.Location = new Point(buttonSmtpLog.Location.X, buttonLocation);
 
                 int heightAdvancedEnabled = buttonSend.Location.Y + buttonSend.Height + titleHeight + (titleHeight / 2);
                 this.MaximumSize = new Size(5000000, heightAdvancedEnabled);
@@ -843,6 +848,7 @@ namespace EmailTests
                 buttonSend.Location = new Point(buttonSend.Location.X, sendButtonStartingLocation);
                 buttonClearLog.Location = new Point(buttonClearLog.Location.X, clearLogButtonStartingLocation);
                 buttonExportLog.Location = new Point(buttonExportLog.Location.X, exportLogButtonStartingLocation);
+                buttonSmtpLog.Location = new Point(buttonSmtpLog.Location.X, smtpLogButtonStartingLocation);
 
                 this.MaximumSize = new Size(5000000, startingHeight);
                 this.Height = startingHeight;     
