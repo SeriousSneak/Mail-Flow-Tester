@@ -136,8 +136,10 @@
  *                            - application now creates an SMTP log (smtp.log) in the same directory where the executable resides
  *                            - a new button called "Open SMTP log" has been added to the log view. This will open the smtp.log file in Notepad for easy access.
  *                            
- *   3.1.1 (Sept 2019)        - the "Open SMTP log" button (viewable when "View Log" is selected) did not move when "Advanced Options" was selected. This has now been fixed.
- *                            - I'm unable to add this update to the About window text box. When I try VS freezes and the designer flashes the About window
+ *   3.1.2 (Sept 9, 2019)     - the "Open SMTP log" button (viewable when "View Log" is selected) did not move when "Advanced Options" was selected. This has now been fixed.
+ *                            - I was unable to edit the text in the text box on the about window. The form would continually flash and visual studio would stop responding.
+ *                              To fix this, I had to expand AboutForm.cs, and then edit AboutForm.resx. On that page you'll see the content of the text box on the about form
+ *                              and I was able to edit it there. Not sure what's going on with that.
  * Future  
  *        - clear SMTP log on app close? Not sure.
  *        - have SMTP log output to a window? Maybe make a new log checkbox which will show the SMTP log in an attached window? Or just have a link that will open up 
