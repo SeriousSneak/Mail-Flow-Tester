@@ -221,14 +221,13 @@ namespace EmailTests
             gui = Guid.NewGuid();
             String messageId = "<" + gui.ToString() + "@mft.local>";
 
-            
-                
+
+            //smtp.log file will be created in the same directly that the executable is launched from
+            SmtpClient client = new SmtpClient(new ProtocolLogger("smtp.log"));
+            MimeMessage mail = new MimeMessage();
 
             try
             {
-                //smtp.log file will be created in the same directly that the executable is launched from
-                SmtpClient client = new SmtpClient(new ProtocolLogger("smtp.log"));
-                MimeMessage mail = new MimeMessage();
                 string[] row = new string[] {"bogus"};
 
                 /*Input validation for Port*/
@@ -475,6 +474,9 @@ namespace EmailTests
 
             catch (Exception ex)
             {
+                client.Disconnect(true);
+                client.ProtocolLogger.Dispose(); //without this, smtp.log will remain open by the process and subsequent mail sends will be unable to write to the file
+
                 dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Error: " + ex.Message, textServer.Text, "");
                 columnResize();
 
