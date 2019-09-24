@@ -46,9 +46,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(9, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 13);
+            this.label1.Size = new System.Drawing.Size(112, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Mail Flow Tester";
+            this.label1.Text = "Supa Mail Flow Tester";
             // 
             // label2
             // 
@@ -150,7 +150,7 @@
             this.MinimizeBox = false;
             this.Name = "AboutForm";
             this.ShowIcon = false;
-            this.Text = "About Mail Flow Tester";
+            this.Text = "About Supa Mail Flow Tester";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
