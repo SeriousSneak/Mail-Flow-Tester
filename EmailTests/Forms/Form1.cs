@@ -141,7 +141,7 @@
  *                              To fix this, I had to expand AboutForm.cs, and then edit AboutForm.resx. On that page you'll see the content of the text box on the about form
  *                              and I was able to edit it there. Not sure what's going on with that.
  * Future  
- *        - clear SMTP log on app close? Not sure.
+ *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
  *        - have SMTP log output to a window? Maybe make a new log checkbox which will show the SMTP log in an attached window? Or just have a link that will open up 
  *          the folder where the smtp log file exists?
  *        - with the move to github the application no longer checks for updates. I need to figure out where to host the install so I can have it check
