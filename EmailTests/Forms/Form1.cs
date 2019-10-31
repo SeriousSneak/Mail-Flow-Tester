@@ -140,6 +140,9 @@
  *                            - I was unable to edit the text in the text box on the about window. The form would continually flash and visual studio would stop responding.
  *                              To fix this, I had to expand AboutForm.cs, and then edit AboutForm.resx. On that page you'll see the content of the text box on the about form
  *                              and I was able to edit it there. Not sure what's going on with that.
+ *                              
+ *   3.1.3 (Oct 31, 2019)     - "Open SMTP log" button now moves side to side when the width of the form is changed while viewing the log   
+ *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
  *        - have SMTP log output to a window? Maybe make a new log checkbox which will show the SMTP log in an attached window? Or just have a link that will open up 
@@ -155,7 +158,7 @@
  *        - option to have the app send x number of messages when Send is clicked (would need to have some sort of progress window appear when this is happening). Maybe change subject
  *          slightly for all sent messages (prepend with the message number. ex. 1, 2, 3)
  *----------------------------------------------------------------------------*/
-//original form size = 355, 333 (470, 445 on home monitor with 125% scaling)
+//original form size = 355, 362
 //Nov 28/14 update: When sending mail from home and I select to do a DNS lookup, the program never times out. If I
 //manually specify the server then it does timeout after 20 seconds. See http://stackoverflow.com/questions/10467476/smtpclient-timeout-doesnt-work
 
@@ -185,8 +188,9 @@ namespace EmailTests
         int initialDataGridWidth = 0;
         int sendButtonStartingLocation = 0; //sendButton Y position
         int clearLogButtonStartingLocation = 0; //clearLogButton Y position
-        int exportLogButtonStartingLocation = 0; //ExportLogButton Y position
-        int smtpLogButtonStartingLocation = 0;
+        int exportLogButtonStartingLocation = 0; //exportLogButton Y position
+        int smtpLogButtonStartingLocation = 0; //smtpLogButton Y position
+        int smtpLogButtonStartingLocationX = 0; //smtpLogButton X position
         
         public Form1()
         {
@@ -200,6 +204,7 @@ namespace EmailTests
             clearLogButtonStartingLocation = buttonClearLog.Location.Y;
             exportLogButtonStartingLocation = buttonExportLog.Location.Y;
             smtpLogButtonStartingLocation = buttonSmtpLog.Location.Y;
+            smtpLogButtonStartingLocationX = buttonSmtpLog.Location.X;
             this.ActiveControl = checkBoxServerName; //sets the active control
         }
 
@@ -880,11 +885,15 @@ namespace EmailTests
 
                 dataGridView1.Width = initialDataGridWidth;
                 dataGridView1.Anchor = (AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top);
+                buttonSmtpLog.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
 
                 this.FormBorderStyle = FormBorderStyle.Sizable;
             }
             else
             {
+                buttonSmtpLog.Anchor = (AnchorStyles.Top | AnchorStyles.Left); //prevents this button from shifting left when the "Log" check box is unchecked
+                buttonSmtpLog.Location = new Point(smtpLogButtonStartingLocationX, smtpLogButtonStartingLocation);
+
                 this.MinimumSize = new Size(0, 0);
                 this.Width = startingWidth;
 

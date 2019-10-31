@@ -251,7 +251,7 @@
             // textTimeOut
             // 
             this.textTimeOut.Location = new System.Drawing.Point(273, 63);
-            this.textTimeOut.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textTimeOut.Margin = new System.Windows.Forms.Padding(2);
             this.textTimeOut.Name = "textTimeOut";
             this.textTimeOut.Size = new System.Drawing.Size(32, 20);
             this.textTimeOut.TabIndex = 28;
@@ -264,7 +264,7 @@
             this.checkServerReachable.Checked = true;
             this.checkServerReachable.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkServerReachable.Location = new System.Drawing.Point(9, 65);
-            this.checkServerReachable.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkServerReachable.Margin = new System.Windows.Forms.Padding(2);
             this.checkServerReachable.Name = "checkServerReachable";
             this.checkServerReachable.Size = new System.Drawing.Size(157, 17);
             this.checkServerReachable.TabIndex = 27;
@@ -767,7 +767,7 @@
             this.buttonExportLog.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.buttonExportLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonExportLog.Location = new System.Drawing.Point(434, 292);
-            this.buttonExportLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonExportLog.Margin = new System.Windows.Forms.Padding(2);
             this.buttonExportLog.Name = "buttonExportLog";
             this.buttonExportLog.Size = new System.Drawing.Size(74, 23);
             this.buttonExportLog.TabIndex = 24;
@@ -781,7 +781,7 @@
             this.buttonSmtpLog.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.buttonSmtpLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSmtpLog.Location = new System.Drawing.Point(876, 292);
-            this.buttonSmtpLog.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonSmtpLog.Margin = new System.Windows.Forms.Padding(2);
             this.buttonSmtpLog.Name = "buttonSmtpLog";
             this.buttonSmtpLog.Size = new System.Drawing.Size(98, 23);
             this.buttonSmtpLog.TabIndex = 25;
