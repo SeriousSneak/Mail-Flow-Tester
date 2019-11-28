@@ -141,7 +141,10 @@
  *                              To fix this, I had to expand AboutForm.cs, and then edit AboutForm.resx. On that page you'll see the content of the text box on the about form
  *                              and I was able to edit it there. Not sure what's going on with that.
  *                              
- *   3.1.3 (Oct 31, 2019)     - "Open SMTP log" button now moves side to side when the width of the form is changed while viewing the log   
+ *   3.1.3 (Oct 31, 2019)     - "Open SMTP log" button now moves side to side when the width of the form is changed while viewing the log  
+ *   
+ *   3.1.4 (Nov 29, 2019)     - "Open SMTP log" button was not moving properly when "Advanced Options" was enabled and "View Log" was toggled. This has now been fixed
+ *                            - MailKit & MimeKit updated from version 2.3.2 to 2.4.1
  *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
@@ -892,7 +895,10 @@ namespace EmailTests
             else
             {
                 buttonSmtpLog.Anchor = (AnchorStyles.Top | AnchorStyles.Left); //prevents this button from shifting left when the "Log" check box is unchecked
-                buttonSmtpLog.Location = new Point(smtpLogButtonStartingLocationX, smtpLogButtonStartingLocation);
+                
+                //with this line present, click advanced options, click view log. The open smtp log button will be in the right location. Uncheck view log and then re check it.
+                //now the Open SMTP log button will display half way up the app where it is if the ADvanced options was not selected
+                //buttonSmtpLog.Location = new Point(smtpLogButtonStartingLocationX, smtpLogButtonStartingLocation);
 
                 this.MinimumSize = new Size(0, 0);
                 this.Width = startingWidth;
