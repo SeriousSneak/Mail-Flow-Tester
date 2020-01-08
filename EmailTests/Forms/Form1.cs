@@ -145,6 +145,9 @@
  *   
  *   3.1.4 (Nov 29, 2019)     - "Open SMTP log" button was not moving properly when "Advanced Options" was enabled and "View Log" was toggled. This has now been fixed
  *                            - MailKit & MimeKit updated from version 2.3.2 to 2.4.1
+ *                            
+ *   3.1.5 (Jan 8, 2020)      - Target .NET Framework bumped to version 4.6.
+ *                            - Application name changed to "Supa Awesome Mailflow Tester" in honor of Dog Man which I'm currently reading to my son.
  *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
