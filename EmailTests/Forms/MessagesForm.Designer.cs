@@ -36,7 +36,7 @@
             // 
             this.textBoxErrorMessage.BackColor = System.Drawing.Color.White;
             this.textBoxErrorMessage.Location = new System.Drawing.Point(13, 15);
-            this.textBoxErrorMessage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBoxErrorMessage.Margin = new System.Windows.Forms.Padding(4);
             this.textBoxErrorMessage.Multiline = true;
             this.textBoxErrorMessage.Name = "textBoxErrorMessage";
             this.textBoxErrorMessage.ReadOnly = true;
@@ -44,11 +44,12 @@
             this.textBoxErrorMessage.Size = new System.Drawing.Size(408, 121);
             this.textBoxErrorMessage.TabIndex = 0;
             this.textBoxErrorMessage.TabStop = false;
+            this.textBoxErrorMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxErrorMessage_KeyDown);
             // 
             // buttonClose
             // 
             this.buttonClose.Location = new System.Drawing.Point(323, 144);
-            this.buttonClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonClose.Margin = new System.Windows.Forms.Padding(4);
             this.buttonClose.Name = "buttonClose";
             this.buttonClose.Size = new System.Drawing.Size(100, 28);
             this.buttonClose.TabIndex = 1;
@@ -64,7 +65,7 @@
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.textBoxErrorMessage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "MessagesForm";
             this.ShowIcon = false;

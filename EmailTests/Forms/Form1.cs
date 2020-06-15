@@ -149,6 +149,10 @@
  *   3.1.5 (Jan 8, 2020)      - Target .NET Framework bumped to version 4.6.
  *                            - Application name changed to "Supa Awesome Mailflow Tester" in honor of Dog Man which I'm currently reading to my son.
  *   
+ *   3.1.6 (June 2020)        - Ctrl-A will now select all text in a message box. Previously, you would have to manually select the text in a message box if you wanted to copy it
+ *                            - BouncyCastle updated from 1.8.5 to 1.8.6.1
+ *                            - MailKit updated from 2.4.1 to 2.7.0
+ *                            - MimeKit updated from 2.4.1 to 2.8.0
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
  *        - have SMTP log output to a window? Maybe make a new log checkbox which will show the SMTP log in an attached window? Or just have a link that will open up 
@@ -163,6 +167,9 @@
  *        - Drag and drop attachements to the attachments window
  *        - option to have the app send x number of messages when Send is clicked (would need to have some sort of progress window appear when this is happening). Maybe change subject
  *          slightly for all sent messages (prepend with the message number. ex. 1, 2, 3)
+ *        - App will look blury if you have multiple monitors with different resolutions as the app scales to the monitor with the lowest resolution, and so when it's moved to a monitor
+ *          with the highest resolution it will look blury. 
+ *          https://stackoverflow.com/questions/13228185/how-to-configure-an-app-to-run-correctly-on-a-machine-with-a-high-dpi-setting-e
  *----------------------------------------------------------------------------*/
 //original form size = 355, 362
 //Nov 28/14 update: When sending mail from home and I select to do a DNS lookup, the program never times out. If I
@@ -212,6 +219,8 @@ namespace EmailTests
             smtpLogButtonStartingLocation = buttonSmtpLog.Location.Y;
             smtpLogButtonStartingLocationX = buttonSmtpLog.Location.X;
             this.ActiveControl = checkBoxServerName; //sets the active control
+
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         }
 
         private void buttonSend_Click(object sender, EventArgs e)

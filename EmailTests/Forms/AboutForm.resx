@@ -121,7 +121,15 @@
     <value>This application is used to send email messages for mail flow testing. I work as a support engineer with Microsoft and support Exchange Online. I often have the need to send email messages to particular endpoints. I got tired to using Telnet for this and developed this application to assist in my work.</value>
   </data>
   <data name="textBox1.Text" xml:space="preserve">
-    <value>3.1.5 (January 8, 2020)
+    <value>3.1.6 (June 15, 2020)        
+ - Ctrl-A will now select all text in a message box. Previously, you would 
+    have to manually select the text in a message box if you wanted to 
+    copy it.
+ - BouncyCastle updated from 1.8.5 to 1.8.6.1
+ - MailKit updated from 2.4.1 to 2.7.0
+ - MimeKit updated from 2.4.1 to 2.8.0
+
+3.1.5 (January 8, 2020)
  - Target .NET Framework bumped to version 4.6
  - Application name changed to "Supa Awesome Mailflow Tester" in honour
    of the book Dogman which I'm currently reading to my son

@@ -24,5 +24,13 @@ namespace EmailTests
         {
             this.Close();
         }
+
+        private void textBoxErrorMessage_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control && (e.KeyCode == Keys.A || e.KeyCode == Keys.A))
+            {
+                textBoxErrorMessage.SelectAll();
+            }
+        }
     }
 }
