@@ -220,6 +220,8 @@ namespace EmailTests
             smtpLogButtonStartingLocationX = buttonSmtpLog.Location.X;
             this.ActiveControl = checkBoxServerName; //sets the active control
 
+            //this was added to try and make app text not blury when used on a multi monitor setup where one monitor is a higher DPI than the others. In this situation, text ill
+            //look blurry on the monitor with the high DPI as the app will scale for the monitor with the lowest DPI, and then upscale on monitors with a higher DPI.
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         }
 
