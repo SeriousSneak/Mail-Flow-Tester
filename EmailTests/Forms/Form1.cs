@@ -150,6 +150,7 @@
  *                            - Application name changed to "Supa Awesome Mailflow Tester" in honor of Dog Man which I'm currently reading to my son.
  *   
  *   3.1.6 (June 2020)        - Ctrl-A will now select all text in a message box. Previously, you would have to manually select the text in a message box if you wanted to copy it
+ *                            - GitHub link on About page has been updated to point to the correct location. Previously the link returned a 404 error.
  *                            - BouncyCastle updated from 1.8.5 to 1.8.6.1
  *                            - MailKit updated from 2.4.1 to 2.7.0
  *                            - MimeKit updated from 2.4.1 to 2.8.0

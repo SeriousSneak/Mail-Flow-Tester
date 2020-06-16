@@ -67,7 +67,7 @@
             this.buttonAboutClose.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.buttonAboutClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAboutClose.Location = new System.Drawing.Point(449, 450);
-            this.buttonAboutClose.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.buttonAboutClose.Margin = new System.Windows.Forms.Padding(4);
             this.buttonAboutClose.Name = "buttonAboutClose";
             this.buttonAboutClose.Size = new System.Drawing.Size(100, 28);
             this.buttonAboutClose.TabIndex = 3;
@@ -98,7 +98,7 @@
             // 
             this.textBox1.BackColor = System.Drawing.Color.White;
             this.textBox1.Location = new System.Drawing.Point(16, 201);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
@@ -121,7 +121,7 @@
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(459, 2);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(91, 82);
             this.pictureBox1.TabIndex = 8;
@@ -155,7 +155,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutForm";
