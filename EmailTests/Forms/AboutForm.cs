@@ -27,5 +27,13 @@ namespace EmailTests
         {
             System.Diagnostics.Process.Start("https://github.com/SeriousSneak/Mail-Flow-Tester/releases");
         }
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control && (e.KeyCode == Keys.A || e.KeyCode == Keys.A))
+            {
+                textBox1.SelectAll();
+            }
+        }
     }
 }

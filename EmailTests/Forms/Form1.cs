@@ -154,6 +154,10 @@
  *                            - BouncyCastle updated from 1.8.5 to 1.8.6.1
  *                            - MailKit updated from 2.4.1 to 2.7.0
  *                            - MimeKit updated from 2.4.1 to 2.8.0
+ *                            
+ *   3.1.7 (July 8, 2020)     - Ctrl-A will now work in the "Change log" text field on the About page
+ *                            - I did not push this new version out yet
+ *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
  *        - have SMTP log output to a window? Maybe make a new log checkbox which will show the SMTP log in an attached window? Or just have a link that will open up 

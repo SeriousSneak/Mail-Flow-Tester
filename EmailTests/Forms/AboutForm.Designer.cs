@@ -83,7 +83,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(92, 17);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Version 3.1.6";
+            this.label3.Text = "Version 3.1.7";
             // 
             // label4
             // 
@@ -106,6 +106,7 @@
             this.textBox1.Size = new System.Drawing.Size(532, 242);
             this.textBox1.TabIndex = 6;
             this.textBox1.Text = resources.GetString("textBox1.Text");
+            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
             // 
             // label5
             // 
