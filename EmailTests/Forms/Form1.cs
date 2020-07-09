@@ -155,7 +155,8 @@
  *                            - MailKit updated from 2.4.1 to 2.7.0
  *                            - MimeKit updated from 2.4.1 to 2.8.0
  *                            
- *   3.1.7 (July 8, 2020)     - Ctrl-A will now work in the "Change log" text field on the About page
+ *   3.1.7 (July 8 & 9, 2020)     - Ctrl-A will now work in the "Change log" text field on the About page
+ *                            - About form will now appear direclty on top of the app, as opposed to popping up on a different monitor (if multiple monitors are being used)
  *                            - I did not push this new version out yet
  *   
  * Future  
