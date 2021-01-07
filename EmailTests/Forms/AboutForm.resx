@@ -123,7 +123,7 @@
   <data name="textBox1.Text" xml:space="preserve">
     <value>3.1.7 (January 7, 2021)
  - Ctrl-A will now work in the "Change log" text field on the About page
- - About form will now appear direclty on top of the app, as opposed to 
+ - About form will now appear directly on top of the app, as opposed to 
    popping up on a different monitor (if multiple monitors are being used)
  - Updated the syntax for New MailboxAddress. I was previously using a 
     syntax that is now obsolete.
