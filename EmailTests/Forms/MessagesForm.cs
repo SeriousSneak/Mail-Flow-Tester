@@ -16,7 +16,7 @@ namespace EmailTests
         {
             InitializeComponent();
             this.Text = formTitle;
-            buttonClose.Text = buttonText;
+            //buttonClose.Text = buttonText;
             textBoxErrorMessage.Text = errorMessage;
         }
 
