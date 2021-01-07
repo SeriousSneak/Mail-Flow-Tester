@@ -155,9 +155,17 @@
  *                            - MailKit updated from 2.4.1 to 2.7.0
  *                            - MimeKit updated from 2.4.1 to 2.8.0
  *                            
- *   3.1.7 (July 8 & 9, 2020) - Ctrl-A will now work in the "Change log" text field on the About page
+ *   3.1.7 (January 7, 2021)     - Ctrl-A will now work in the "Change log" text field on the About page
  *                            - About form will now appear direclty on top of the app, as opposed to popping up on a different monitor (if multiple monitors are being used)
- *                            - I did not push this new version out yet
+ *                            - Updated the syntax for New MailboxAddress. I was previously using a syntax that is now obsolete.
+ *                            - Application will no longer crash if smtp.log is locked by another application
+ *                            - removed "Return" code lines and replaced them with application exception (throw new ApplicationException). This now allows the program to execute the
+ *                              "catch" code block when we need to stop running which will properly close smtp.log file. When I was using returns, "catch" would not be run which
+ *                              resulted in the file smtp.log not being closed properly.
+ *                            - Button added to open windows explorer to the location where smtp.log is located 
+ *                            - General cleanup of code
+ *                            - MailKit and MimeKit updated to 2.10.1
+ *                            - BouncyCastle updated to 1.8.9
  *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
@@ -169,7 +177,6 @@
  *        - When adding a different P2 address, is there any way to tell the app to not add the header, "Sender," which casuses the (sent on behalf of) name in Outlook?
  *        - when opening the log, should the initial width be that of the datagrid? Currently the log always opens to the same width, which is the initial datagrid view
  *          width with no content present
- *        - Have up lookup MX records. Maybe pop a status window when the lookup is happening? Or a status bar at the bottom of the window? I like the pop window better.
  *        - Drag and drop attachements to the attachments window
  *        - option to have the app send x number of messages when Send is clicked (would need to have some sort of progress window appear when this is happening). Maybe change subject
  *          slightly for all sent messages (prepend with the message number. ex. 1, 2, 3)
@@ -210,6 +217,9 @@ namespace EmailTests
         int exportLogButtonStartingLocation = 0; //exportLogButton Y position
         int smtpLogButtonStartingLocation = 0; //smtpLogButton Y position
         int smtpLogButtonStartingLocationX = 0; //smtpLogButton X position
+        int smtpLogLocationButtonStartingLocation = 0; //smtpLogLocationButton Y position
+        int smtpLogLocationButtonStartingLocationX = 0; //smtpLogLocationButton X position
+        
         
         public Form1()
         {
@@ -224,9 +234,11 @@ namespace EmailTests
             exportLogButtonStartingLocation = buttonExportLog.Location.Y;
             smtpLogButtonStartingLocation = buttonSmtpLog.Location.Y;
             smtpLogButtonStartingLocationX = buttonSmtpLog.Location.X;
+            smtpLogLocationButtonStartingLocation = buttonLogLocation.Location.Y;
+            smtpLogLocationButtonStartingLocationX = buttonLogLocation.Location.X;
             this.ActiveControl = checkBoxServerName; //sets the active control
 
-            //this was added to try and make app text not blury when used on a multi monitor setup where one monitor is a higher DPI than the others. In this situation, text ill
+            //this was added to try and make app text not blury when used on a multi monitor setup where one monitor is a higher DPI than the others. In this situation, text will
             //look blurry on the monitor with the high DPI as the app will scale for the monitor with the lowest DPI, and then upscale on monitors with a higher DPI.
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         }
@@ -236,10 +248,6 @@ namespace EmailTests
             DateTime currentDateTime = DateTime.Now;
             string textSubjectFinal = "";
 
-            //this was used to loop through the code to have the app send a large amount of messages. I may add this as an option int he UI in the future.
-            //for (int x = 0; x < 600; x++ )
-            //{
-
             //Disable the send button so it can't be clicked multiple times
             buttonSend.Enabled = false;
                 
@@ -247,11 +255,34 @@ namespace EmailTests
             //Generate a Message-ID. This is generated outside the Try so that the value of "gui" can be used in the "catch" 
             Guid gui = new Guid();
             gui = Guid.NewGuid();
+
             String messageId = "<" + gui.ToString() + "@mft.local>";
 
 
+            //the following checks if smtp.log is locked by another application. If so, this app will not write to it. Previously, if smtp.log was locked by
+            //another application this app would crash when trying to write to the file.
+
+
+            /* -----------------------------------
+             * SMTP LOGGING TO SMTP.LOG
+             * -----------------------------------*/
             //smtp.log file will be created in the same directly that the executable is launched from
-            SmtpClient client = new SmtpClient(new ProtocolLogger("smtp.log"));
+            string logPath = "smtp.log";
+            FileInfo log = new FileInfo(logPath);
+
+            SmtpClient client;
+
+            //enable logging if either smtp.log isn't locked, or if it does not exist
+            if (IsFileLocked(log) == false || File.Exists(logPath) == false)
+            {
+                client = new SmtpClient(new ProtocolLogger(logPath));
+            }
+            else
+            {
+                client = new SmtpClient();
+                MessageBox.Show("The file smtp.log is currently in use by another application and will not be written to. The log within the application will still be written to.","SMTP Log");
+            }
+
             MimeMessage mail = new MimeMessage();
 
             try
@@ -285,9 +316,8 @@ namespace EmailTests
                 {
                     if (textTo.Text == "")
                     {
-                        MessageBox.Show("Please enter a single recipient address.", "Input Validation", MessageBoxButtons.OK);
                         buttonSend.Enabled = true;
-                        return;
+                        throw new ApplicationException("Please enter a single recipient address.");
                     }
                         
                     //detects the number of @ symbols in the textTo text box. We only want one for a DNS lookup.
@@ -297,9 +327,8 @@ namespace EmailTests
                     //validates that only a single recipinet has been entered
                     if (multipleRecipients != 1)
                     {
-                        MessageBox.Show("Please enter ONLY a single recipient address.", "Input Validation", MessageBoxButtons.OK);
                         buttonSend.Enabled = true;
-                        return;
+                        throw new ApplicationException("Please enter ONLY a single recipient address.");
                     }
 
                     string toAddy = textTo.Text;
@@ -310,15 +339,13 @@ namespace EmailTests
 
                     if (mx == "")
                     {
-                        //maybe put more in here. Maybe even a window of the nslookup results?
-                        MessageBox.Show("DNS resolution error, no MX record found for " + toAddySplit[1] + ". You may need to manually specify the recipient server.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         buttonSend.Enabled = true;
                             
                         //add a log entry noting the DNS resolution error
                         dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubject.Text, getOptions(), "DNS resolution error", textServer.Text, "");
                         columnResize();
-
-                        return;
+                        
+                        throw new ApplicationException("DNS resolution error, no MX record found for " + toAddySplit[1] + ". You may need to manually specify the recipient server.");
                     }
                     else
                     {
@@ -330,9 +357,8 @@ namespace EmailTests
                 {
                     if (textServer.Text == "")
                     {
-                        MessageBox.Show("Please ensure a recipient server has been entered.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         buttonSend.Enabled = true;
-                        return;
+                        throw new ApplicationException("Please ensure a recipient server has been entered.");
                     }
                 }
 
@@ -370,7 +396,7 @@ namespace EmailTests
                 //    throw new ApplicationException("Failed to connect to " + textServer.Text + " on port " + textPort.Text + ".");
                 //}
 
-                //The bellow replaced the above code in the Mar 21, 2019 release (version 2.8.0). See the comments on the above block which talks about the problem with it.
+                //The below replaced the above code in the Mar 21, 2019 release (version 2.8.0). See the comments on the above block which talks about the problem with it.
                 //https://stackoverflow.com/questions/1062035/how-to-configure-socket-connect-timeout
 
 
@@ -394,22 +420,24 @@ namespace EmailTests
                 /* -----------------------------------
                  * EMAIL PROPERTIES
                  * -----------------------------------*/
-                //mail.To.Add(textTo.Text);
-                mail.To.Add(new MailboxAddress(textTo.Text));
+                //mail.To.Add(new MailboxAddress(textTo.Text)); //this formatting is now obsolete. Need to use the following:
+                //example: message.To.Add (new MailboxAddress ("Alice", "alice@wonderland.com")); (http://www.mimekit.net/docs/html/Creating-Messages.htm)
+
+                mail.To.Add(new MailboxAddress(textTo.Text, textTo.Text));
 
                 if (checkSpecifyP2.Checked == false)
                 {
-                    mail.From.Add(new MailboxAddress(textFrom.Text));
+                    mail.From.Add(new MailboxAddress(textFrom.Text, textTo.Text));
                 }
                 else
                 {
-                    mail.Sender = new MailboxAddress(textFrom.Text);
-                    mail.From.Add(new MailboxAddress(textFromP2.Text));
+                    mail.Sender = new MailboxAddress(textFrom.Text, textFrom.Text);
+                    mail.From.Add(new MailboxAddress(textFromP2.Text, textFromP2.Text));
                 }
 
                 if (checkSpecifyReplyTo.Checked == true)
                 {
-                    mail.ReplyTo.Add(new MailboxAddress(textReplyTo.Text));
+                    mail.ReplyTo.Add(new MailboxAddress(textReplyTo.Text, textReplyTo.Text));
                 }
 
                 if (checkDateAppend.Checked == true)
@@ -510,16 +538,12 @@ namespace EmailTests
 
                 string errorMessage = "Error: " + ex.Message;
                 MessagesForm mf = new MessagesForm(errorMessage, "Error (╯°□°)╯︵ ┻━┻", "Close");
-                //mf.Show(); //will allow the form to lose focus
                 mf.ShowDialog(); //will prevent the form from losing focus
                 
             }
 
             //enable our send button again
             buttonSend.Enabled = true;
-
-            //}
-            //MessageBox.Show("done sending all messages");
         }
 
         private void buttonAttachment_Click(object sender, EventArgs e)
@@ -686,7 +710,6 @@ namespace EmailTests
         private void Form1_HelpButtonClicked(object sender, CancelEventArgs e)
         {            
             AboutForm af = new AboutForm();
-            //af.Show(); //will allow the form to lose focus
             af.ShowDialog(); //will prevent the form from losing focus
             e.Cancel = true; //this stops the question mark on the mouse curser from showing after the about box is closed
         }
@@ -858,6 +881,7 @@ namespace EmailTests
                 buttonClearLog.Location = new Point(buttonClearLog.Location.X, buttonLocation);
                 buttonExportLog.Location = new Point(buttonExportLog.Location.X, buttonLocation);
                 buttonSmtpLog.Location = new Point(buttonSmtpLog.Location.X, buttonLocation);
+                buttonLogLocation.Location = new Point(buttonLogLocation.Location.X, buttonLocation);
 
                 int heightAdvancedEnabled = buttonSend.Location.Y + buttonSend.Height + titleHeight + (titleHeight / 2);
                 this.MaximumSize = new Size(5000000, heightAdvancedEnabled);
@@ -881,6 +905,7 @@ namespace EmailTests
                 buttonClearLog.Location = new Point(buttonClearLog.Location.X, clearLogButtonStartingLocation);
                 buttonExportLog.Location = new Point(buttonExportLog.Location.X, exportLogButtonStartingLocation);
                 buttonSmtpLog.Location = new Point(buttonSmtpLog.Location.X, smtpLogButtonStartingLocation);
+                buttonLogLocation.Location = new Point(buttonLogLocation.Location.X, smtpLogLocationButtonStartingLocation);
 
                 this.MaximumSize = new Size(5000000, startingHeight);
                 this.Height = startingHeight;     
@@ -915,10 +940,6 @@ namespace EmailTests
             else
             {
                 buttonSmtpLog.Anchor = (AnchorStyles.Top | AnchorStyles.Left); //prevents this button from shifting left when the "Log" check box is unchecked
-                
-                //with this line present, click advanced options, click view log. The open smtp log button will be in the right location. Uncheck view log and then re check it.
-                //now the Open SMTP log button will display half way up the app where it is if the ADvanced options was not selected
-                //buttonSmtpLog.Location = new Point(smtpLogButtonStartingLocationX, smtpLogButtonStartingLocation);
 
                 this.MinimumSize = new Size(0, 0);
                 this.Width = startingWidth;
@@ -952,7 +973,8 @@ namespace EmailTests
         private void ToCsV(DataGridView dGV, string filename)
         {
             string stOutput = "";
-            // Export titles:
+            
+            // Export titles
             string sHeaders = "";
 
             for (int j = 0; j < dGV.Columns.Count; j++)
@@ -969,7 +991,7 @@ namespace EmailTests
                 
             stOutput += sHeaders + "\r\n";
 
-            // Export data.
+            // Export data
             for (int i = 0; i < dGV.RowCount; i++)
             {
                 string stLine = "";
@@ -1001,8 +1023,6 @@ namespace EmailTests
             }
             catch (Exception ex)
             {
-                //MessageBox.Show("Error: " + ex.Message, "Oh snap...", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                
                 string errorMessage = "Error: " + ex.Message;
                 MessagesForm mf = new MessagesForm(errorMessage, "Error (╯°□°)╯︵ ┻━┻", "Close");
                 mf.ShowDialog(); //will prevent the form from losing focus
@@ -1042,8 +1062,6 @@ namespace EmailTests
 
                 //change the window title on the message box that pops up to match the column header of the column that was double clicked
                 mf.Text = dataGridView1.Columns[e.ColumnIndex].HeaderText;
-
-                //mf.Show(); //will allow the form to lose focus
                 mf.ShowDialog(); //will prevent the form from losing focus
             }
         }
@@ -1058,6 +1076,33 @@ namespace EmailTests
             {
                 MessageBox.Show("Log file not yet created. Please send a message first.", "SMTP Log", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }         
+        }
+
+        protected virtual bool IsFileLocked(FileInfo file)  //https://stackoverflow.com/questions/876473/is-there-a-way-to-check-if-a-file-is-in-use
+        {
+            try
+            {
+                using (FileStream stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    stream.Close();
+                }
+            }
+            catch (IOException)
+            {
+                //the file is unavailable because it is:
+                //still being written to
+                //or being processed by another thread
+                //or does not exist (has already been processed)
+                return true;
+            }
+
+            //file is not locked
+            return false;
+        }
+
+        private void buttonLogLocation_Click(object sender, EventArgs e)
+        {
+            Process.Start(Environment.CurrentDirectory);
         }
     }
 }
