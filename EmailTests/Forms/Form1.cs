@@ -155,7 +155,7 @@
  *                            - MailKit updated from 2.4.1 to 2.7.0
  *                            - MimeKit updated from 2.4.1 to 2.8.0
  *                            
- *   3.1.7 (January 7, 2021)     - Ctrl-A will now work in the "Change log" text field on the About page
+ *   3.1.7 (January 7, 2021)  - Ctrl-A will now work in the "Change log" text field on the About page
  *                            - About form will now appear direclty on top of the app, as opposed to popping up on a different monitor (if multiple monitors are being used)
  *                            - Updated the syntax for New MailboxAddress. I was previously using a syntax that is now obsolete.
  *                            - Application will no longer crash if smtp.log is locked by another application
@@ -163,6 +163,8 @@
  *                              "catch" code block when we need to stop running which will properly close smtp.log file. When I was using returns, "catch" would not be run which
  *                              resulted in the file smtp.log not being closed properly.
  *                            - Button added to open windows explorer to the location where smtp.log is located 
+ *                            - error text box is now larger and no longer has a "close button." The button was redundant as the window can be closed with the X
+ *                              in the upper right hand corner
  *                            - General cleanup of code
  *                            - MailKit and MimeKit updated to 2.10.1
  *                            - BouncyCastle updated to 1.8.9
