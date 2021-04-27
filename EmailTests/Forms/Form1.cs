@@ -168,6 +168,10 @@
  *                            - General cleanup of code
  *                            - MailKit and MimeKit updated to 2.10.1
  *                            - BouncyCastle updated to 1.8.9
+ *                            
+ *   3.1.8 (April 27, 2021)   - Fixed a bug that caused the MailFrom address to be set as the recipient address
+ *                            - MailKit and MimeKit updated to 2.11.1
+ *                            - BouncyCastle updated to 1.8.10
  *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
@@ -424,22 +428,39 @@ namespace EmailTests
                  * -----------------------------------*/
                 //mail.To.Add(new MailboxAddress(textTo.Text)); //this formatting is now obsolete. Need to use the following:
                 //example: message.To.Add (new MailboxAddress ("Alice", "alice@wonderland.com")); (http://www.mimekit.net/docs/html/Creating-Messages.htm)
-
+                
+                /* old
                 mail.To.Add(new MailboxAddress(textTo.Text, textTo.Text));
+                */
+
+                mail.To.Add(MailboxAddress.Parse(textTo.Text));
 
                 if (checkSpecifyP2.Checked == false)
                 {
-                    mail.From.Add(new MailboxAddress(textFrom.Text, textTo.Text));
+                   /* old
+                   mail.From.Add(new MailboxAddress(textFrom.Text, textTo.Text)); //***BUG*** This caused the sender to be set as the recipient address
+                   //this was fixed on April 4, 2021 in release 3.1.8.
+                   */
+                    
+                    mail.From.Add(MailboxAddress.Parse(textFrom.Text));
                 }
                 else
                 {
+                    /* old
                     mail.Sender = new MailboxAddress(textFrom.Text, textFrom.Text);
                     mail.From.Add(new MailboxAddress(textFromP2.Text, textFromP2.Text));
+                    */
+
+                    mail.Sender = MailboxAddress.Parse(textFrom.Text);
+                    mail.From.Add(MailboxAddress.Parse(textFromP2.Text));
                 }
 
                 if (checkSpecifyReplyTo.Checked == true)
-                {
+                {   /* old
                     mail.ReplyTo.Add(new MailboxAddress(textReplyTo.Text, textReplyTo.Text));
+                    */
+
+                    mail.ReplyTo.Add(MailboxAddress.Parse(textReplyTo.Text));
                 }
 
                 if (checkDateAppend.Checked == true)
