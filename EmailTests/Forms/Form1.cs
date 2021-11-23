@@ -172,6 +172,11 @@
  *   3.1.8 (April 27, 2021)   - Fixed a bug that caused the MailFrom address to be set as the recipient address
  *                            - MailKit and MimeKit updated to 2.11.1
  *                            - BouncyCastle updated to 1.8.10
+ *                            
+ *   3.1.9 (Nov 22, 2021)     - Updated .NET from 4.6 to 4.8
+ *                            - Updated MailKit from 2.11.1 to 2.15.0
+ *                            - Updated MimeKit from 2.11.0 to 2.15.1
+ *                            - Removed BouncyCastle. Make sure this doesn't impact the app. Test the EXE on Azure VM.
  *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
@@ -465,7 +470,8 @@ namespace EmailTests
 
                 if (checkDateAppend.Checked == true)
                 {
-                    textSubjectFinal = textSubject.Text + " <" + currentDateTime + ">";
+                    string UTCFormatedDate = currentDateTime.ToString("MMM dd, yyyy HH:mm:ss zzz");
+                    textSubjectFinal = textSubject.Text + " <" + UTCFormatedDate + ">";
                 }
                 else
                 {
@@ -544,7 +550,7 @@ namespace EmailTests
                 client.Disconnect(true);
                 client.ProtocolLogger.Dispose(); //without this, smtp.log will remain open by the process and subsequent mail sends will be unable to write to the file
 
-                dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Success", textServer.Text, messageId);
+                dataGridView1.Rows.Add(currentDateTime.ToString("MMM dd, yyyy HH:mm:ss zzz"), textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Success", textServer.Text, messageId);
                 columnResize();
                     
                 MessageBox.Show("The message was sent to " + textServer.Text + ".", "Sweet!", MessageBoxButtons.OK, MessageBoxIcon.Information);
