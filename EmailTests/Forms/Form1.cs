@@ -177,6 +177,10 @@
  *                            - Updated MailKit from 2.11.1 to 2.15.0
  *                            - Updated MimeKit from 2.11.0 to 2.15.1
  *                            - Removed BouncyCastle. Make sure this doesn't impact the app. Test the EXE on Azure VM.
+ *                            - Date format has been updated and the time zone has now been added
+ *                            - If a P2 address is selected, the address will now appear in the log under the Options column
+ *                            - BUG: Open the log. Expand the window to the right. Then close the log and re-open. The "Open SMTP log" button will be missing
+ *                            - Maybe this should be a 3.2.0 release.
  *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
@@ -562,7 +566,7 @@ namespace EmailTests
                 client.Disconnect(true);
                 client.ProtocolLogger.Dispose(); //without this, smtp.log will remain open by the process and subsequent mail sends will be unable to write to the file
 
-                dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Error: " + ex.Message, textServer.Text, "");
+                dataGridView1.Rows.Add(currentDateTime.ToString("MMM dd, yyyy HH:mm:ss zzz"), textFrom.Text, textTo.Text, textSubjectFinal, getOptions(), "Error: " + ex.Message, textServer.Text, "");
                 columnResize();
 
                 string errorMessage = "Error: " + ex.Message;
@@ -870,7 +874,7 @@ namespace EmailTests
             }
             if (checkSpecifyP2.Checked)
             {
-                selectedOptions += "Specify P2; ";
+                selectedOptions += "Specify P2 (" + textFromP2.Text + ");";
             }
             if (checkAddCustomHeader.Checked)
             {
