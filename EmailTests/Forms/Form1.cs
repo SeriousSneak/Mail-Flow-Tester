@@ -176,11 +176,11 @@
  *   3.1.9 (Nov 22, 2021)     - Updated .NET from 4.6 to 4.8
  *                            - Updated MailKit from 2.11.1 to 2.15.0
  *                            - Updated MimeKit from 2.11.0 to 2.15.1
- *                            - Removed BouncyCastle. Make sure this doesn't impact the app. Test the EXE on Azure VM.
- *                            - Date format has been updated and the time zone has now been added
+ *                            - Removed BouncyCastle.
+ *                            - In the Log view within the app the date format has been updated to remove ambiguity and the time zone has now been added to the time stamp.
  *                            - If a P2 address is selected, the address will now appear in the log under the Options column
- *                            - BUG: Open the log. Expand the window to the right. Then close the log and re-open. The "Open SMTP log" button will be missing
- *                            - Maybe this should be a 3.2.0 release.
+ *                            - Previously, if you click the View Log to open the log, rersized it, closed it and then re-opened again, the "Open SMTP log" button would be missing. This
+ *                              bug has now been fixed.
  *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
@@ -966,7 +966,10 @@ namespace EmailTests
 
                 dataGridView1.Width = initialDataGridWidth;
                 dataGridView1.Anchor = (AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top);
-                buttonSmtpLog.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
+                
+                //causes this button to move left and right when the log is open and its width is changed.
+                //buttonSmtpLog.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
+                //buttonLogLocation.Anchor = (AnchorStyles.Right | AnchorStyles.Top);
 
                 this.FormBorderStyle = FormBorderStyle.Sizable;
             }

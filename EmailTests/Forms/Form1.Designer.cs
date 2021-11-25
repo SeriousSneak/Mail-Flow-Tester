@@ -83,13 +83,6 @@
             this.checkSpecifyReplyTo = new System.Windows.Forms.CheckBox();
             this.textReplyTo = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.contextMenuStripLog = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuCopyCell = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuDeleteRow = new System.Windows.Forms.ToolStripMenuItem();
-            this.buttonClearLog = new System.Windows.Forms.Button();
-            this.buttonExportLog = new System.Windows.Forms.Button();
-            this.buttonSmtpLog = new System.Windows.Forms.Button();
-            this.buttonLogLocation = new System.Windows.Forms.Button();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.From = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.To = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -98,6 +91,13 @@
             this.Result = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Server = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.messageid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStripLog = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuCopyCell = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuDeleteRow = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonClearLog = new System.Windows.Forms.Button();
+            this.buttonExportLog = new System.Windows.Forms.Button();
+            this.buttonSmtpLog = new System.Windows.Forms.Button();
+            this.buttonLogLocation = new System.Windows.Forms.Button();
             this.gbOptions.SuspendLayout();
             this.groupBoxAttachments.SuspendLayout();
             this.contextMenuStripAttachment.SuspendLayout();
@@ -654,84 +654,6 @@
             this.dataGridView1.TabStop = false;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellDoubleClick);
             // 
-            // contextMenuStripLog
-            // 
-            this.contextMenuStripLog.ImageScalingSize = new System.Drawing.Size(24, 24);
-            this.contextMenuStripLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuCopyCell,
-            this.toolStripMenuDeleteRow});
-            this.contextMenuStripLog.Name = "contextMenuStripAttachment";
-            this.contextMenuStripLog.Size = new System.Drawing.Size(131, 48);
-            // 
-            // toolStripMenuCopyCell
-            // 
-            this.toolStripMenuCopyCell.Name = "toolStripMenuCopyCell";
-            this.toolStripMenuCopyCell.Size = new System.Drawing.Size(130, 22);
-            this.toolStripMenuCopyCell.Text = "Copy cell";
-            this.toolStripMenuCopyCell.Click += new System.EventHandler(this.toolStripMenuCopyCell_Click);
-            // 
-            // toolStripMenuDeleteRow
-            // 
-            this.toolStripMenuDeleteRow.Name = "toolStripMenuDeleteRow";
-            this.toolStripMenuDeleteRow.Size = new System.Drawing.Size(130, 22);
-            this.toolStripMenuDeleteRow.Text = "Delete row";
-            this.toolStripMenuDeleteRow.Click += new System.EventHandler(this.toolStripMenuDeleteRow_Click);
-            // 
-            // buttonClearLog
-            // 
-            this.buttonClearLog.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
-            this.buttonClearLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonClearLog.Location = new System.Drawing.Point(344, 292);
-            this.buttonClearLog.Name = "buttonClearLog";
-            this.buttonClearLog.Size = new System.Drawing.Size(75, 23);
-            this.buttonClearLog.TabIndex = 23;
-            this.buttonClearLog.TabStop = false;
-            this.buttonClearLog.Text = "Clear log";
-            this.buttonClearLog.UseVisualStyleBackColor = true;
-            this.buttonClearLog.Click += new System.EventHandler(this.buttonClearLog_Click);
-            // 
-            // buttonExportLog
-            // 
-            this.buttonExportLog.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
-            this.buttonExportLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonExportLog.Location = new System.Drawing.Point(434, 292);
-            this.buttonExportLog.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonExportLog.Name = "buttonExportLog";
-            this.buttonExportLog.Size = new System.Drawing.Size(74, 23);
-            this.buttonExportLog.TabIndex = 24;
-            this.buttonExportLog.TabStop = false;
-            this.buttonExportLog.Text = "Export log";
-            this.buttonExportLog.UseVisualStyleBackColor = true;
-            this.buttonExportLog.Click += new System.EventHandler(this.buttonExportLog_Click);
-            // 
-            // buttonSmtpLog
-            // 
-            this.buttonSmtpLog.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
-            this.buttonSmtpLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonSmtpLog.Location = new System.Drawing.Point(876, 292);
-            this.buttonSmtpLog.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonSmtpLog.Name = "buttonSmtpLog";
-            this.buttonSmtpLog.Size = new System.Drawing.Size(98, 23);
-            this.buttonSmtpLog.TabIndex = 25;
-            this.buttonSmtpLog.TabStop = false;
-            this.buttonSmtpLog.Text = "Open SMTP log";
-            this.buttonSmtpLog.UseVisualStyleBackColor = true;
-            this.buttonSmtpLog.Click += new System.EventHandler(this.ButtonSmtpLog_Click);
-            // 
-            // buttonLogLocation
-            // 
-            this.buttonLogLocation.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
-            this.buttonLogLocation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonLogLocation.Location = new System.Drawing.Point(761, 292);
-            this.buttonLogLocation.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonLogLocation.Name = "buttonLogLocation";
-            this.buttonLogLocation.Size = new System.Drawing.Size(103, 23);
-            this.buttonLogLocation.TabIndex = 26;
-            this.buttonLogLocation.TabStop = false;
-            this.buttonLogLocation.Text = "Open log location";
-            this.buttonLogLocation.UseVisualStyleBackColor = true;
-            this.buttonLogLocation.Click += new System.EventHandler(this.buttonLogLocation_Click);
-            // 
             // Date
             // 
             this.Date.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -804,6 +726,84 @@
             this.messageid.Name = "messageid";
             this.messageid.ReadOnly = true;
             this.messageid.Width = 89;
+            // 
+            // contextMenuStripLog
+            // 
+            this.contextMenuStripLog.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.contextMenuStripLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuCopyCell,
+            this.toolStripMenuDeleteRow});
+            this.contextMenuStripLog.Name = "contextMenuStripAttachment";
+            this.contextMenuStripLog.Size = new System.Drawing.Size(131, 48);
+            // 
+            // toolStripMenuCopyCell
+            // 
+            this.toolStripMenuCopyCell.Name = "toolStripMenuCopyCell";
+            this.toolStripMenuCopyCell.Size = new System.Drawing.Size(130, 22);
+            this.toolStripMenuCopyCell.Text = "Copy cell";
+            this.toolStripMenuCopyCell.Click += new System.EventHandler(this.toolStripMenuCopyCell_Click);
+            // 
+            // toolStripMenuDeleteRow
+            // 
+            this.toolStripMenuDeleteRow.Name = "toolStripMenuDeleteRow";
+            this.toolStripMenuDeleteRow.Size = new System.Drawing.Size(130, 22);
+            this.toolStripMenuDeleteRow.Text = "Delete row";
+            this.toolStripMenuDeleteRow.Click += new System.EventHandler(this.toolStripMenuDeleteRow_Click);
+            // 
+            // buttonClearLog
+            // 
+            this.buttonClearLog.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.buttonClearLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonClearLog.Location = new System.Drawing.Point(344, 292);
+            this.buttonClearLog.Name = "buttonClearLog";
+            this.buttonClearLog.Size = new System.Drawing.Size(75, 23);
+            this.buttonClearLog.TabIndex = 23;
+            this.buttonClearLog.TabStop = false;
+            this.buttonClearLog.Text = "Clear log";
+            this.buttonClearLog.UseVisualStyleBackColor = true;
+            this.buttonClearLog.Click += new System.EventHandler(this.buttonClearLog_Click);
+            // 
+            // buttonExportLog
+            // 
+            this.buttonExportLog.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.buttonExportLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonExportLog.Location = new System.Drawing.Point(433, 292);
+            this.buttonExportLog.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonExportLog.Name = "buttonExportLog";
+            this.buttonExportLog.Size = new System.Drawing.Size(74, 23);
+            this.buttonExportLog.TabIndex = 24;
+            this.buttonExportLog.TabStop = false;
+            this.buttonExportLog.Text = "Export log";
+            this.buttonExportLog.UseVisualStyleBackColor = true;
+            this.buttonExportLog.Click += new System.EventHandler(this.buttonExportLog_Click);
+            // 
+            // buttonSmtpLog
+            // 
+            this.buttonSmtpLog.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.buttonSmtpLog.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSmtpLog.Location = new System.Drawing.Point(636, 292);
+            this.buttonSmtpLog.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonSmtpLog.Name = "buttonSmtpLog";
+            this.buttonSmtpLog.Size = new System.Drawing.Size(98, 23);
+            this.buttonSmtpLog.TabIndex = 25;
+            this.buttonSmtpLog.TabStop = false;
+            this.buttonSmtpLog.Text = "Open SMTP log";
+            this.buttonSmtpLog.UseVisualStyleBackColor = true;
+            this.buttonSmtpLog.Click += new System.EventHandler(this.ButtonSmtpLog_Click);
+            // 
+            // buttonLogLocation
+            // 
+            this.buttonLogLocation.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.buttonLogLocation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonLogLocation.Location = new System.Drawing.Point(520, 292);
+            this.buttonLogLocation.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonLogLocation.Name = "buttonLogLocation";
+            this.buttonLogLocation.Size = new System.Drawing.Size(103, 23);
+            this.buttonLogLocation.TabIndex = 26;
+            this.buttonLogLocation.TabStop = false;
+            this.buttonLogLocation.Text = "Open log location";
+            this.buttonLogLocation.UseVisualStyleBackColor = true;
+            this.buttonLogLocation.Click += new System.EventHandler(this.buttonLogLocation_Click);
             // 
             // Form1
             // 
