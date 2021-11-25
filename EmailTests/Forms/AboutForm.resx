@@ -118,10 +118,39 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="label4.Text" xml:space="preserve">
-    <value>This application is used to send email messages for mail flow testing. I work as a support engineer with Microsoft and support Exchange Online. I often have the need to send email messages to particular endpoints. I got tired to using Telnet for this and developed this application to assist in my work.</value>
+    <value>This application is used to send email messages for mail flow testing. I work as a support engineer with Microsoft and support Exchange Online. I often have the need to send email messages to particular endpoints. I was tired of using Telnet for this and developed this application to assist in my work.</value>
   </data>
   <data name="textBox1.Text" xml:space="preserve">
-    <value>3.1.8 (April 27, 2021)
+    <value>3.2.0 (Nov 25, 2021)     
+ - Updated .NET from 4.6 to 4.8
+ - Updated MailKit from 2.11.1 to 2.15.0
+ - Updated MimeKit from 2.11.0 to 2.15.1
+ - Removed BouncyCastle.
+ - In the Log view within the app the date format has been updated to 
+    remove ambiguity and the time zone has now been added to the time stamp.
+ - If a P2 address is selected, the address will now appear in the log under the 
+    Options column
+ - If a Reply-To address is selected, the address will now appear in the log
+    under the Options column
+ - Previously, if you click the View Log to open the log, rersized it, closed it 
+    and then re-opened again, the "Open SMTP log" button would be missing. 
+    This bug has now been fixed.
+ - Application now identifies itself over HELO/EHLO as 
+    SupaAwesomeMailflowTester. Previously it just used the local IP of the
+    machine on which it was running.
+ - When unchecking "Advanced Options", if a Reply-To address had been set 
+    it would continue to be used. This option is now unchecked when 
+    unchecking "Advanced Options." This mirrors what happens with the rest 
+    of the Advanced Options settings.
+ - the Subject in the log will now populate propertly when there is a DNS 
+    Resolution Error. Previously the subject would be blank when theer was a 
+    DNS lookup error
+ - when there is a DNS Resolution Error, there will now be a single entry added
+    to the log. Previously this caused two entries to the log.
+ - when there is a DNS Resolution Error, the recipienut server textbox will now 
+    clear the previous entry
+
+3.1.8 (April 27, 2021)
  - Fixed a bug that caused the MailFrom address to be set as the 
     recipient address
  - MailKit and MimeKit updated to 2.11.1

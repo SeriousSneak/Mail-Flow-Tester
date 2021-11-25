@@ -836,7 +836,7 @@
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Supa Awesome Mail Flow Tester v3.1 Dev";
+            this.Text = "Supa Awesome Mail Flow Tester v3.2";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form1_HelpButtonClicked);
             this.gbOptions.ResumeLayout(false);
             this.gbOptions.PerformLayout();

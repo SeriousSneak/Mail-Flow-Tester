@@ -2,11 +2,11 @@
  * Programmer: Andrew Stobart (Microsoft)
  * Initial release date: March 2014
  * 
- * Description:  This program can be used to send test email messages to an
- *               Office 365 tenant before the MX record for the domain is changed.
- *               This allows for mail flow testing for messages originating from the 
- *               Internet and destined to the customer. The Server variable is the MX
- *               record that Office 365 provides for the domain.
+ * Description:  This application is used to send email messages for mail flow testing. 
+ *               I work as a support engineer with Microsoft and support Exchange Online. 
+ *               I often have the need to send email messages to particular endpoints. I 
+ *               was tired of using Telnet for this and developed this application to assist 
+ *               in my work.
  *               
  * 
  * Versions:
@@ -173,14 +173,21 @@
  *                            - MailKit and MimeKit updated to 2.11.1
  *                            - BouncyCastle updated to 1.8.10
  *                            
- *   3.1.9 (Nov 22, 2021)     - Updated .NET from 4.6 to 4.8
+ *   3.2.0 (Nov 25, 2021)     - Updated .NET from 4.6 to 4.8
  *                            - Updated MailKit from 2.11.1 to 2.15.0
  *                            - Updated MimeKit from 2.11.0 to 2.15.1
  *                            - Removed BouncyCastle.
  *                            - In the Log view within the app the date format has been updated to remove ambiguity and the time zone has now been added to the time stamp.
  *                            - If a P2 address is selected, the address will now appear in the log under the Options column
+ *                            - If a Reply-To address is selected, the address will now appear in the log under the Options column
  *                            - Previously, if you click the View Log to open the log, rersized it, closed it and then re-opened again, the "Open SMTP log" button would be missing. This
  *                              bug has now been fixed.
+ *                            - Application now identifies itself over HELO/EHLO as SupaAwesomeMailflowTester. Previously it just used the local IP of the machine on which it was running.
+ *                            - When unchecking "Advanced Options", if a Reply-To address had been set it would continue to be used. This option is now unchecked when unchecking "Advanced Options." This mirrors
+ *                              what happens with the rest of the Advanced Options settings.
+ *                            - the Subject in the log will now populate propertly when there is a DNS Resolution Error. Previously the subject would be blank when theer was a DNS lookup error
+ *                            - when there is a DNS Resolution Error, there will now be a single entry added to the log. Previously this caused two entries to the log.
+ *                            - when there is a DNS Resolution Error, the recipienut server textbox will now clear the previous entry
  *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
@@ -212,7 +219,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Net.Sockets;
 using MailKit.Net.Smtp;
-using MimeKit;
+using MimeKit;                          //http://www.mimekit.net/
 using MailKit.Security;
 using MailKit;
 using System.Diagnostics;
@@ -261,7 +268,7 @@ namespace EmailTests
         private void buttonSend_Click(object sender, EventArgs e)
         {
             DateTime currentDateTime = DateTime.Now;
-            string textSubjectFinal = "";
+            string textSubjectFinal = textSubject.Text;
 
             //Disable the send button so it can't be clicked multiple times
             buttonSend.Enabled = false;
@@ -287,6 +294,8 @@ namespace EmailTests
 
             SmtpClient client;
 
+            
+
             //enable logging if either smtp.log isn't locked, or if it does not exist
             if (IsFileLocked(log) == false || File.Exists(logPath) == false)
             {
@@ -302,7 +311,11 @@ namespace EmailTests
 
             try
             {
+                client.LocalDomain = "SupaAwesomeMailflowTester";
+
                 string[] row = new string[] {"bogus"};
+
+                
 
                 /*Input validation for Port*/
                 int n = 0;
@@ -355,11 +368,16 @@ namespace EmailTests
                     if (mx == "")
                     {
                         buttonSend.Enabled = true;
-                            
+
                         //add a log entry noting the DNS resolution error
-                        dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubject.Text, getOptions(), "DNS resolution error", textServer.Text, "");
-                        columnResize();
-                        
+                        //Nov 25 2021 - Removed the following ine as I'm already adding a log entry when this happens. This caused two entries in the log when there was a DNS resolution error.
+                        //dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubject.Text, getOptions(), "DNS resolution error", textServer.Text, "");
+
+                        //do I need this?
+                        //columnResize();
+
+                        textServer.Text = "";
+
                         throw new ApplicationException("DNS resolution error, no MX record found for " + toAddySplit[1] + ". You may need to manually specify the recipient server.");
                     }
                     else
@@ -876,6 +894,10 @@ namespace EmailTests
             {
                 selectedOptions += "Specify P2 (" + textFromP2.Text + ");";
             }
+            if (checkSpecifyReplyTo.Checked)
+            {
+                selectedOptions += "Specify Reply-To (" + textReplyTo.Text + ");";
+            }
             if (checkAddCustomHeader.Checked)
             {
                 selectedOptions += "X header; ";
@@ -945,6 +967,7 @@ namespace EmailTests
            
                 //disable advanced options
                 checkSpecifyP2.Checked = false;
+                checkSpecifyReplyTo.Checked = false;
                 checkAddCustomHeader.Checked = false;
                 listBoxAttachment.Items.Clear();
 
