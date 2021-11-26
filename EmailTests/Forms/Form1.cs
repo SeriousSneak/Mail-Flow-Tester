@@ -180,14 +180,14 @@
  *                            - In the Log view within the app the date format has been updated to remove ambiguity and the time zone has now been added to the time stamp.
  *                            - If a P2 address is selected, the address will now appear in the log under the Options column
  *                            - If a Reply-To address is selected, the address will now appear in the log under the Options column
- *                            - Previously, if you click the View Log to open the log, rersized it, closed it and then re-opened again, the "Open SMTP log" button would be missing. This
+ *                            - Previously, if you clicked the View Log to open the log, resized it, closed it, and then re-opened again, the "Open SMTP log" button would be missing. This
  *                              bug has now been fixed.
- *                            - Application now identifies itself over HELO/EHLO as SupaAwesomeMailflowTester. Previously it just used the local IP of the machine on which it was running.
+ *                            - Application now identifies itself over HELO/EHLO as SupaAwesomeMailflowTester. Previously it used the local IP of the machine on which it was running.
  *                            - When unchecking "Advanced Options", if a Reply-To address had been set it would continue to be used. This option is now unchecked when unchecking "Advanced Options." This mirrors
  *                              what happens with the rest of the Advanced Options settings.
- *                            - the Subject in the log will now populate propertly when there is a DNS Resolution Error. Previously the subject would be blank when theer was a DNS lookup error
- *                            - when there is a DNS Resolution Error, there will now be a single entry added to the log. Previously this caused two entries to the log.
- *                            - when there is a DNS Resolution Error, the recipienut server textbox will now clear the previous entry
+ *                            - The Subject in the log will now populate properly when there is a DNS Resolution Error. Previously the subject would be blank when there was a DNS lookup error.
+ *                            - When there is a DNS Resolution Error, there will now be a single entry added to the log. Previously this caused two entries to be added to the log.
+ *                            - When there is a DNS Resolution Error, the recipient server textbox will now clear the previous entry
  *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.

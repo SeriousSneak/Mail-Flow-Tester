@@ -132,23 +132,23 @@
     Options column
  - If a Reply-To address is selected, the address will now appear in the log
     under the Options column
- - Previously, if you click the View Log to open the log, rersized it, closed it 
+ - Previously, if you clicked the View Log to open the log, resized it, closed it, 
     and then re-opened again, the "Open SMTP log" button would be missing. 
     This bug has now been fixed.
  - Application now identifies itself over HELO/EHLO as 
-    SupaAwesomeMailflowTester. Previously it just used the local IP of the
+    SupaAwesomeMailflowTester. Previously it used the local IP of the
     machine on which it was running.
  - When unchecking "Advanced Options", if a Reply-To address had been set 
     it would continue to be used. This option is now unchecked when 
     unchecking "Advanced Options." This mirrors what happens with the rest 
     of the Advanced Options settings.
- - the Subject in the log will now populate propertly when there is a DNS 
-    Resolution Error. Previously the subject would be blank when theer was a 
-    DNS lookup error
- - when there is a DNS Resolution Error, there will now be a single entry added
-    to the log. Previously this caused two entries to the log.
- - when there is a DNS Resolution Error, the recipienut server textbox will now 
-    clear the previous entry
+ - The Subject in the log will now populate properly when there is a DNS 
+    Resolution Error. Previously the subject would be blank when there was a 
+    DNS lookup error.
+ - When there is a DNS Resolution Error, there will now be a single entry added
+    to the log. Previously this caused two entries to be added to the log.
+ - When there is a DNS Resolution Error, the recipient server textbox will now 
+    clear the previous entry.
 
 3.1.8 (April 27, 2021)
  - Fixed a bug that caused the MailFrom address to be set as the 
