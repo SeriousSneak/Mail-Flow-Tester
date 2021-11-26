@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <TargetFrameworkProfile />
-    <PublishUrl>C:\Users\astobart\OneDrive - Microsoft\Desktop\MFT v3.1.8 Install\</PublishUrl>
+    <PublishUrl>C:\Users\astobart\OneDrive - Microsoft\Desktop\MFT v3.2.0 Install\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>

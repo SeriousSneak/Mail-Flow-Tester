@@ -374,7 +374,7 @@ namespace EmailTests
                         //dataGridView1.Rows.Add(currentDateTime, textFrom.Text, textTo.Text, textSubject.Text, getOptions(), "DNS resolution error", textServer.Text, "");
 
                         //do I need this?
-                        //columnResize();
+                        columnResize();
 
                         textServer.Text = "";
 
