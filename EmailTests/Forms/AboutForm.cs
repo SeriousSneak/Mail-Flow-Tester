@@ -35,7 +35,5 @@ namespace EmailTests
                 textBox1.SelectAll();
             }
         }
-
-
     }
 }
