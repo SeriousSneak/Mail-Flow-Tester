@@ -121,7 +121,13 @@
     <value>This application is used to send email messages for mail flow testing. I work as a support engineer with Microsoft and support Exchange Online. I often have the need to send email messages to particular endpoints. I was tired of using Telnet for this and developed this application to assist in my work.</value>
   </data>
   <data name="textBox1.Text" xml:space="preserve">
-    <value>3.2.0 (Nov 25, 2021)     
+    <value>3.2.1 (August 10, 2022)       
+ - Updated MailKit from 2.15.0 to 3.3.0
+ - Updated MimeKit from 2.15.1 to 3.3.0
+ - Added the package Portable.BouncyCastle as the current version of 
+    MimeKit had some dependancies on it
+
+3.2.0 (Nov 25, 2021)     
  - Updated .NET from 4.6 to 4.8
  - Updated MailKit from 2.11.1 to 2.15.0
  - Updated MimeKit from 2.11.0 to 2.15.1
