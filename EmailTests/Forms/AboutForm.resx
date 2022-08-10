@@ -125,7 +125,7 @@
  - Updated MailKit from 2.15.0 to 3.3.0
  - Updated MimeKit from 2.15.1 to 3.3.0
  - Added the package Portable.BouncyCastle as the current version of 
-    MimeKit had some dependancies on it
+    MimeKit had some dependencies on it
 
 3.2.0 (Nov 25, 2021)     
  - Updated .NET from 4.6 to 4.8
