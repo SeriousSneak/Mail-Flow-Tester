@@ -191,7 +191,7 @@
  *                            
  *  3.2.1  (Aug 10, 2022)     - Updated MailKit from 2.15.0 to 3.3.0
  *                            - Updated MimeKit from 2.15.1 to 3.3.0
- *                            - Added the package Portable.BouncyCastle as the current version of MimeKit had some dependancies on it
+ *                            - Added the package Portable.BouncyCastle as the current version of MimeKit had some dependencies on it
  *   
  * Future  
  *        - clear SMTP log on app close? Not sure. I'm torn on how to handle this. I don't want to log to become massive, but I don't want to clear it without at least asking the user.
