@@ -35,5 +35,10 @@ namespace EmailTests
                 textBox1.SelectAll();
             }
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
